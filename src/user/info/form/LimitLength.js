@@ -20,14 +20,9 @@ export default class LimitLengthTextInput extends Component {
             <View>
                 <AutoExpandingTextInput
                     {...this.props}
-                    onChangeText={(text) => {
-                        text = text.replace(/ /g, '_');
-                        this.props.onChangeText && this.props.onChangeText(text);
-
-                    }}
                 />
                 <Text style={[style.remainder, {color: remainderColor}]}>
-                    {remainderLength}
+                     remained: {remainderLength}
                 </Text>
             </View>
 

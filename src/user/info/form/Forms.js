@@ -52,6 +52,7 @@ export default class Forms extends Component {
                     </Text>
                     <LimitLengthTextInput
                         maxLength={100}
+                        limitLength={90}
                         onChangeText={(limittext) => {this.setState({limittext})}}
                         value={this.state.limittext}
                     />
