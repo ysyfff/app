@@ -35,7 +35,7 @@ export default class Info extends Component {
                                 color: Skin.baseColor
                             },
                             title: {
-                                main: '基本信息',
+                                main: 'Flexbox布局',
                                 custom: {
                                     style: {color: Skin.baseColor}
                                 }
@@ -110,10 +110,15 @@ export default class Info extends Component {
                                 color: Skin.baseColor
                             },
                             title: {
-                                main: '跑步记录',
+                                main: 'Form表单',
                                 custom: {
                                     style: {color: Skin.baseColor}
                                 }
+                            },
+                            onPress: (event) => {
+                                me.props.navigators.push({
+                                    ident: 'Myself.formInfo'
+                                })
                             }
                         }
                     },{

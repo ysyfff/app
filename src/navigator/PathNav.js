@@ -8,6 +8,7 @@ import PathTabBar from '../tabbar/PathTabBar'
 import Basic from '../user/info/basic/Basic'
 import History from '../user/info/history/History'
 import Walk from '../user/info/walk/Walk'
+import Forms from '../user/info/form/Forms'
 import If from '../../component/If'
 
 export default class PathNav extends Component {
@@ -71,7 +72,7 @@ export default class PathNav extends Component {
                             ),
                             RightButton: '',
                             Title: (
-                                <Text style={{fontSize: 18}}>基本信息</Text>
+                                <Text style={{fontSize: 18}}>Flexbox布局</Text>
                             )
                         },
                         style: {backgroundColor: 'gray'}
@@ -110,6 +111,25 @@ export default class PathNav extends Component {
                             RightButton: '',
                             Title: (
                                 <Text style={{fontSize: 18}}>步行记录</Text>
+                            )
+                        },
+                        style: {backgroundColor: 'gray'}
+                    }
+                },
+                'Myself.formInfo': {
+                    renderScene: function(route, navigators) {
+                        return (<Forms />)
+                    },
+                    NavBar: {
+                        routeMapper: {
+                            LeftButton: (
+                                <View style={style.leftButton}>
+                                    <Icon name="angle-left" color="black" size={26} />
+                                </View>
+                            ),
+                            RightButton: '',
+                            Title: (
+                                <Text style={{fontSize: 18}}>Form表单</Text>
                             )
                         },
                         style: {backgroundColor: 'gray'}
