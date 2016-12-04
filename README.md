@@ -1,4 +1,5 @@
 ##Problem
 
 * 如何return一个component？
-  * 未解
+  * 已解
+    * 使用高阶的Component
