@@ -26,7 +26,7 @@ const style = StyleSheet.create({
     default: {
         height: 30,
         borderWidth: 1,
-        borderColor: '#0f0f0f',
+        borderColor: 'green',
         fontSize: 13,
         paddingLeft: 5
     }

@@ -25,10 +25,15 @@ export default class LimitLengthTextInput extends Component {
                      remained: {remainderLength}
                 </Text>
             </View>
-
-
         )
     }
+}
+
+// 组件的属性可以接受任意值，字符串、对象、函数等等都可以。
+// 有时，我们需要一种机制，验证别人使用组件时，提供的参数是否符合要求。
+
+LimitLengthTextInput.propTypes = {
+    limitLength: React.PropTypes.number.isRequired
 }
 
 const style = StyleSheet.create({

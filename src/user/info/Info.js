@@ -25,7 +25,7 @@ export default class Info extends Component {
                     list: [{
                         bar: {
                             iconStart: {
-                                name: 'user',
+                                name: 'heart',
                                 size: 22,
                                 color: Skin.baseColor
                             },
@@ -49,7 +49,7 @@ export default class Info extends Component {
                     },{
                         bar: {
                             iconStart: {
-                                name: 'history',
+                                name: 'heart',
                                 size: 22,
                                 color: Skin.baseColor
                             },
@@ -59,14 +59,14 @@ export default class Info extends Component {
                                 color: Skin.baseColor
                             },
                             title: {
-                                main: '历史记录',
+                                main: 'Form表单',
                                 custom: {
                                     style: {color: Skin.baseColor}
                                 }
                             },
                             onPress: (event) => {
                                 me.props.navigators.push({
-                                    ident: 'Myself.historyInfo'
+                                    ident: 'Myself.formInfo'
                                 })
                             }
                         }
@@ -94,30 +94,6 @@ export default class Info extends Component {
                             onPress: (event) => {
                                 me.props.navigators.push({
                                     ident: 'Myself.walkInfo'
-                                })
-                            }
-                        }
-                    },{
-                        bar: {
-                            iconStart: {
-                                name: 'heart',
-                                size: 22,
-                                color: Skin.baseColor
-                            },
-                            iconEnd: {
-                                name: 'angle-right',
-                                size: 16,
-                                color: Skin.baseColor
-                            },
-                            title: {
-                                main: 'Form表单',
-                                custom: {
-                                    style: {color: Skin.baseColor}
-                                }
-                            },
-                            onPress: (event) => {
-                                me.props.navigators.push({
-                                    ident: 'Myself.formInfo'
                                 })
                             }
                         }
