@@ -87,5 +87,6 @@
     * 使用高阶的Component`export var xx = () => class extends React.Component{ render() {}}`
 
 
-* 为什么不可以export class却可以export default class
-  *
+* 如何导出多个匿名函数或者类
+  * 已解
+    * 请先将匿名函数或者类转化成变量
