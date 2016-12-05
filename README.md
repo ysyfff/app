@@ -36,7 +36,8 @@
         export {f};
       ```
   * 另外，export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
-    * ```
+    * 代码
+      ```
         export var foo = 'bar';
         setTimeout(() => foo = 'baz', 500);
 
