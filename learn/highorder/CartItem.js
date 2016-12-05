@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native'
+import {View, Text, TextInput} from 'react-native'
 import {IntervalEnhance} from './IntervalEnhance'
 
 class CartItem extends React.Component {
@@ -10,6 +10,7 @@ class CartItem extends React.Component {
         }
     }
     render() {
+        debugger
         return (
             <View>
                 <Text>
@@ -23,4 +24,5 @@ class CartItem extends React.Component {
     }
 }
 
-export default IntervalEnhance(CartItem);
+export default IntervalEnhance(CartItem)
+// export var TextInput IntervalEnhance(TextInput)

@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TextInput} from 'react-native'
 
 import ViewContainer from '../../../common/ViewContainer'
 import AutoExpandingTextInput from './InputComponent/AutoExpanding'
 import LimitLengthTextInput from './InputComponent/LimitLength'
 import Form from './Form.js'
 import CartItem from '../../../../learn/highorder/CartItem'
-
+// import {} from './Enhance'
+// import TextInput from './Enhance'
+import {TextInputV} from './Enhance'
 
 export default class Forms extends Component {
     constructor(props) {
@@ -66,16 +68,14 @@ export default class Forms extends Component {
                         4. Form comes
                     </Text>
                     <Form>
-                        <TextInput
+                        <TextInputV
                             style={style.input}
                             validation="required"
-                            showerror={true}
                             errormsg="1"
                         />
-                        <TextInput
+                        <TextInputV
                             style={style.input}
                             validation="required"
-                            showerror={true}
                             errormsg="2"
                         />
                     </Form>
@@ -86,6 +86,26 @@ export default class Forms extends Component {
                     </Text>
                     <CartItem/>
                 </View>
+                <View style={style.block}>
+                    <Text>
+                        5. CartItem
+                    </Text>
+                    <CartItem start={1000}/>
+                </View>
+                {/*
+                    <Form>
+                        <aa
+                            style={style.input}
+                            validation="required"
+                            errormsg="1"
+                        />
+                        <TextInput
+                            style={style.input}
+                            validation="required"
+                            errormsg="2"
+                        />
+                    </Form>
+                */}
             </ViewContainer>
         )
     }

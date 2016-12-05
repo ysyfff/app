@@ -2,7 +2,6 @@ import React from 'react'
 
 export var IntervalEnhance = ComposedComponent => class extends React.Component {
 
-    static displayName = 'ComponentEnhancedWithIntervalHOC';
 
     constructor(props) {
         super(props)
@@ -12,6 +11,9 @@ export var IntervalEnhance = ComposedComponent => class extends React.Component 
     }
 
     componentDidMount() {
+        this.setState({
+            seconds: this.props.start || 0
+        });
         this.interval = setInterval(this.tick.bind(this), 1000);
     }
 
@@ -26,6 +28,7 @@ export var IntervalEnhance = ComposedComponent => class extends React.Component 
     }
 
     render() {
+
         return (
             <ComposedComponent
                 {...this.props}

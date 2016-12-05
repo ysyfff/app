@@ -4,11 +4,7 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, StyleSheet} from 'react-native'
 
-class If extends Component {
-    render() {
-        return this.props.v ? this.props.children : null;
-    }
-}
+
 
 export default class Form extends Component {
     constructor(props) {
@@ -18,31 +14,7 @@ export default class Form extends Component {
 
         return (
             <View style={this.props.style}>
-
-                {this.props.children.map(function(field, i) {
-
-                    // 错误的做法
-                    // 在渲染之前增加props属性
-                    // field.props.showerror = i % 2 == 0 ? true : false;
-
-                    return (
-                        <View key={i}>
-
-                            {/*Form Field*/}
-                            {field}
-
-                            {/*Error Message*/}
-                            <If v={field.props.showerror}>
-                                <View style={style.error}>
-                                    <Text>
-                                        {field.props.errormsg}
-                                    </Text>
-                                </View>
-                            </If>
-                        </View>
-                    );
-                })}
-
+                {this.props.children}
             </View>
         )
     }
