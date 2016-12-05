@@ -1,5 +1,5 @@
 ##Knowledge
-* export
+* [export](http://es6.ruanyifeng.com/#docs/module)
   * export输出变量`export var a = 'b'; export var b='c'`或者`var a='b'; var b='c'; export {a, b}`
   * export函数或者类 `export function a(){}`或者使用as关键字重新命名,`function a(){}; export {a as f1}`
   * 需要特别注意的是，export命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。
@@ -87,6 +87,6 @@
     * 使用高阶的Component`export var xx = () => class extends React.Component{ render() {}}`
 
 
-* 如何导出多个匿名函数或者类
+* 如何在一个文件中导出多个匿名函数或者类
   * 已解
     * 请先将匿名函数或者类转化成变量
