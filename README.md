@@ -42,6 +42,7 @@
 
         上面代码输出变量foo，值为bar，500毫秒之后变成baz。
         这一点与CommonJS规范完全不同。CommonJS模块输出的是值的缓存，不存在动态更新
+        setTimeout(() => foo = 'baz', 500);
       ```
   * export default
     * ```
