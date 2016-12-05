@@ -3,7 +3,7 @@
   * export输出变量`export var a = 'b'; export var b='c'`或者`var a='b'; var b='c'; export {a, b}`
   * export函数或者类 `export function a(){}`或者使用as关键字重新命名,`function a(){}; export {a as f1}`
   * 需要特别注意的是，export命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。
-    * ```
+  ```
         // 报错
         export 1;
 
@@ -34,7 +34,7 @@
         // 正确
         function f() {}
         export {f};
-      ```
+     ```
   * 另外，export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
     * 代码
       ```
