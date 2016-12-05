@@ -34,52 +34,50 @@
         // 正确
         function f() {}
         export {f};
-     ```
+  ```
   * 另外，export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
-    * 代码
-      ```
-        export var foo = 'bar';
-        setTimeout(() => foo = 'baz', 500);
+  ```
+    export var foo = 'bar';
+    setTimeout(() => foo = 'baz', 500);
 
-        上面代码输出变量foo，值为bar，500毫秒之后变成baz。
-        这一点与CommonJS规范完全不同。CommonJS模块输出的是值的缓存，不存在动态更新
-        setTimeout(() => foo = 'baz', 500);
-      ```
+    上面代码输出变量foo，值为bar，500毫秒之后变成baz。
+    这一点与CommonJS规范完全不同。CommonJS模块输出的是值的缓存，不存在动态更新
+  ```
   * export default
-    * ```
-        export default function () {
-            console.log('foo');
-        }
-        上面代码是一个模块文件export-default.js，它的默认输出是一个函数。
-        其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。
-        export default命令用在非匿名函数前，也是可以的。
+  ```
+    export default function () {
+        console.log('foo');
+    }
+    上面代码是一个模块文件export-default.js，它的默认输出是一个函数。
+    其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。
+    export default命令用在非匿名函数前，也是可以的。
 
-        本质上，export default就是输出一个叫做default的变量或方法，然后系统允许你为它取任意名字。所以，下面的写法是有效的。
+    本质上，export default就是输出一个叫做default的变量或方法，然后系统允许你为它取任意名字。所以，下面的写法是有效的。
 
-        function add(x, y) {
-          return x * y;
-        }
-        export {add as default};
-        // 等同于
-        // export default add;
+    function add(x, y) {
+      return x * y;
+    }
+    export {add as default};
+    // 等同于
+    // export default add;
 
-        import { default as xxx } from 'modules';
-        // 等同于
-        // import xxx from 'modules';
+    import { default as xxx } from 'modules';
+    // 等同于
+    // import xxx from 'modules';
 
 
 
-        正是因为export default命令其实只是输出一个叫做default的变量，所以它后面不能跟变量声明语句。
-        // 正确
-        export var a = 1;
+    正是因为export default命令其实只是输出一个叫做default的变量，所以它后面不能跟变量声明语句。
+    // 正确
+    export var a = 1;
 
-        // 正确
-        var a = 1;
-        export default a;
+    // 正确
+    var a = 1;
+    export default a;
 
-        // 错误
-        export default var a = 1;
-      ```
+    // 错误
+    export default var a = 1;
+  ```
 
 
 ##Problem
