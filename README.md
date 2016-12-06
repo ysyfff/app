@@ -4,36 +4,36 @@
   * export函数或者类 `export function a(){}`或者使用as关键字重新命名,`function a(){}; export {a as f1}`
   * 需要特别注意的是，export命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。
   ```
-        // 报错
-        export 1;
+    // 报错
+    export 1;
 
-        // 报错
-        var m = 1;
-        export m;
-
-
-        // 写法一
-        export var m = 1;
-
-        // 写法二
-        var m = 1;
-        export {m};
-
-        // 写法三
-        var n = 1;
-        export {n as m};
+    // 报错
+    var m = 1;
+    export m;
 
 
-        // 报错
-        function f() {}
-        export f;
+    // 写法一
+    export var m = 1;
 
-        // 正确
-        export function f() {};
+    // 写法二
+    var m = 1;
+    export {m};
 
-        // 正确
-        function f() {}
-        export {f};
+    // 写法三
+    var n = 1;
+    export {n as m};
+
+
+    // 报错
+    function f() {}
+    export f;
+
+    // 正确
+    export function f() {};
+
+    // 正确
+    function f() {}
+    export {f};
   ```
   * 另外，export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
   ```
@@ -82,7 +82,7 @@
 
 ##Problem
 
-* 如何return一个component？
+* 如何return一个component
   * 已解
     * 使用高阶的Component`export var xx = () => class extends React.Component{ render() {}}`
 

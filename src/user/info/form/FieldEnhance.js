@@ -12,7 +12,7 @@ class If extends React.Component {
 }
 
 //在这里能够直接读取到加强后的Component上的props
-export default ComposedComponent => class extends React.Component {
+export default (ComposedComponent, setter, getter) => class extends React.Component {
 
     static displayName = 'FormEnhanceClass';
 
@@ -32,14 +32,25 @@ export default ComposedComponent => class extends React.Component {
     componentWillUnmount() {
     }
 
+    //检查本Filed是否通过校验
+    check() {
+        
+    }
+
     render() {
         return (
             <View>
+                {/*
+                    Filed
+                */}
                 <ComposedComponent
                     {...this.props}
                     {...this.state}
                 />
 
+                {/*
+                    Filed Error
+                */}
                 <If v={this.state.showerr}>
                     <View style={style.error}>
                         <Text>

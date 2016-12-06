@@ -1,9 +1,9 @@
 //强化表单Component
 import React from 'react'
 import {TextInput} from 'react-native'
-import ComponentEnhance from './ComponentEnhance'
+import FieldEnhance from './FieldEnhance'
 
-var TextInputV = ComponentEnhance(TextInput);
+var TextInputV = FieldEnhance(TextInput);
 
 
 export {

@@ -10,6 +10,20 @@ import CartItem from '../../../../learn/highorder/CartItem'
 // import TextInput from './Enhance'
 import {TextInputV} from './Enhance'
 
+import _ from 'lodash'
+
+let format = (...args) => {
+    let ans = [];
+    args.map(arg => {
+        if(_.isString(arg)){
+            ans.push(arg);
+        }else{
+            ans.push(arg[0] + ':[' + arg[1] + ',' + arg[2] + ']');
+        }
+    });
+    return ans.join(',');
+}
+
 export default class Forms extends Component {
     constructor(props) {
         super(props);
@@ -17,11 +31,17 @@ export default class Forms extends Component {
             text: '',
             limittext: '呦西',
             ptext: '哈哈',
+            max: 15,
             textarea: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React.',
         }
     }
     handleNameChange(event) {
         this.setState({text:  event.nativeEvent.text.toUpperCase()});
+    }
+    componentDidMount() {
+        this.setState({
+            max: 20
+        })
     }
     render() {
         return (
@@ -75,36 +95,25 @@ export default class Forms extends Component {
                         />
                         <TextInputV
                             style={style.input}
-                            validation="required"
+                            validation={format('required', ['length', 1, this.state.max])}
                             errormsg="2"
                         />
                     </Form>
                 </View>
-                <View style={style.block}>
-                    <Text>
-                        5. CartItem
-                    </Text>
-                    <CartItem/>
-                </View>
-                <View style={style.block}>
-                    <Text>
-                        5. CartItem
-                    </Text>
-                    <CartItem start={1000}/>
-                </View>
+
                 {/*
-                    <Form>
-                        <aa
-                            style={style.input}
-                            validation="required"
-                            errormsg="1"
-                        />
-                        <TextInput
-                            style={style.input}
-                            validation="required"
-                            errormsg="2"
-                        />
-                    </Form>
+                    <View style={style.block}>
+                        <Text>
+                            5. CartItem
+                        </Text>
+                        <CartItem/>
+                    </View>
+                    <View style={style.block}>
+                        <Text>
+                            5. CartItem
+                        </Text>
+                        <CartItem start={1000}/>
+                    </View>
                 */}
             </ViewContainer>
         )
