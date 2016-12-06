@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TextInput, Switch, DatePickerIOS} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Switch, DatePickerIOS, Picker} from 'react-native'
 
 import ViewContainer from '../../../common/ViewContainer'
 import AutoExpandingTextInput from './InputComponent/AutoExpanding'
@@ -9,6 +9,7 @@ import CartItem from '../../../../learn/highorder/CartItem'
 // import {} from './Enhance'
 // import TextInput from './Enhance'
 import {TextInputV} from './Enhance'
+
 
 import _ from 'lodash'
 
@@ -32,6 +33,7 @@ export default class Forms extends Component {
             limittext: '呦西',
             ptext: '哈哈',
             date: new Date(),
+            selected1: 'key1',
             timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
             swh: false,
             max: 15,
@@ -48,6 +50,11 @@ export default class Forms extends Component {
         this.setState({
             max: 20
         })
+    }
+    onValueChange(key: string, value: string){
+        const newState = {};
+        newState[key] = value;
+        this.setState(newState);
     }
     render() {
         return (
@@ -104,17 +111,7 @@ export default class Forms extends Component {
                             validation={format('required', ['length', 1, this.state.max])}
                             errormsg="2"
                         />
-                        <Switch
-                            validation="required"
-                            onValueChange={(swh) => this.setState({swh})}
-                            value={this.state.swh}
-                        />
-                        <DatePickerIOS
-                          date={this.state.date}
-                          mode="date"
-                          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-                          onDateChange={this.onDateChange.bind(this)}
-                        />
+
                     </Form>
                 </View>
 
@@ -131,6 +128,26 @@ export default class Forms extends Component {
                         </Text>
                         <CartItem start={1000}/>
                     </View>
+
+                    <Switch
+                        validation="required"
+                        onValueChange={(swh) => this.setState({swh})}
+                        value={this.state.swh}
+                    />
+                    <Picker
+                        style={[style.picker, { backgroundColor: '#555'}]}
+                        selectedValue={this.state.selected1}
+                        onValueChange={this.onValueChange.bind(this, 'selected1')}
+                        mode="dialog">
+                        <Picker.Item label="hello" value="key0" />
+                        <Picker.Item label="world" value="key1" />
+                     </Picker>
+                    <DatePickerIOS
+                      date={this.state.date}
+                      mode="date"
+                      timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+                      onDateChange={this.onDateChange.bind(this)}
+                    />
                 */}
             </ViewContainer>
         )
@@ -148,6 +165,9 @@ const style = StyleSheet.create({
         borderWidth: 1,
         height: 30,
         fontSize: 13,
+    },
+    picker: {
+        width: 100,
     },
     textarea: {
         height: 30

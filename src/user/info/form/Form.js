@@ -11,7 +11,6 @@ export default class Form extends Component {
         super(props)
     }
     render() {
-        debugger
         return (
             <View style={this.props.style}>
                 {this.props.children}

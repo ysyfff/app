@@ -4,12 +4,50 @@
 
 import React from 'react'
 import {StyleSheet, View, Text} from 'react-native'
+import _ from 'lodash'
 
 class If extends React.Component {
     render() {
         return this.props.v ? this.props.children : null;
     }
 }
+
+class Validation {
+
+    constructor(rules) {
+        this.rules = rules;
+        /*
+        rules: {
+            required: [],
+            length: [1,2],
+            max: [54]
+        }
+        */
+    }
+
+    parse(validations) {
+        let rules = null;
+        
+        if(_.isString(validations)) {
+            rules = validations.split(/\,(?![^{\[]*[}\]])/g).reduce((accumulator, currentValue) => {
+                var argsOfRule = currentValue.split(':');
+                var rule = argsOfRule.shift();
+
+                argsOfRule = argsOfRule.map((arg) => {
+                    return JSON.parse(arg);
+                });
+
+                accumulator[rule] = _.isArray(argsOfRule[0]) ? argsOfRule[0] : argsOfRule;
+
+                return accumulator;
+            }, {});
+        }
+
+        return new Validation(rules || {});
+    }
+
+}
+
 
 //在这里能够直接读取到加强后的Component上的props
 export default (ComposedComponent, setter, getter) => class extends React.Component {
@@ -34,7 +72,7 @@ export default (ComposedComponent, setter, getter) => class extends React.Compon
 
     //检查本Filed是否通过校验
     check() {
-        
+
     }
 
     render() {
