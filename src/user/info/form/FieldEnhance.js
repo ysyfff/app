@@ -27,27 +27,30 @@ class Validation {
 
     parse(validations) {
         let rules = null;
-        
-        if(_.isString(validations)) {
-            rules = validations.split(/\,(?![^{\[]*[}\]])/g).reduce((accumulator, currentValue) => {
-                var argsOfRule = currentValue.split(':');
-                var rule = argsOfRule.shift();
 
-                argsOfRule = argsOfRule.map((arg) => {
+        if(_.isString(validations)) {
+            //正则的前瞻 (?!匹配模式)
+            rules = validations.split(/\,(?![^{\[]*[}\]])/g).reduce((accumulator, currentValue) => {
+                let rules = currentValue.split(':');
+                let rule = rules.shift();
+
+                rules = rules.map((arg) => {
                     return JSON.parse(arg);
                 });
 
-                accumulator[rule] = _.isArray(argsOfRule[0]) ? argsOfRule[0] : argsOfRule;
+                accumulator[rule] = _.isArray(rules[0]) ? rules[0] : rules;
 
                 return accumulator;
             }, {});
         }
-
+        console.log(rules)
         return new Validation(rules || {});
     }
 
 }
 
+let V = new Validation();
+V.parse('required,a:[1,2]')
 
 //在这里能够直接读取到加强后的Component上的props
 export default (ComposedComponent, setter, getter) => class extends React.Component {
