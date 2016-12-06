@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TextInput, Switch} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Switch, DatePickerIOS} from 'react-native'
 
 import ViewContainer from '../../../common/ViewContainer'
 import AutoExpandingTextInput from './InputComponent/AutoExpanding'
@@ -31,10 +31,15 @@ export default class Forms extends Component {
             text: '',
             limittext: '呦西',
             ptext: '哈哈',
+            date: new Date(),
+            timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
             swh: false,
             max: 15,
             textarea: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React.',
         }
+    }
+    onDateChange(date) {
+       this.setState({date});
     }
     handleNameChange(event) {
         this.setState({text:  event.nativeEvent.text.toUpperCase()});
@@ -103,6 +108,12 @@ export default class Forms extends Component {
                             validation="required"
                             onValueChange={(swh) => this.setState({swh})}
                             value={this.state.swh}
+                        />
+                        <DatePickerIOS
+                          date={this.state.date}
+                          mode="date"
+                          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+                          onDateChange={this.onDateChange.bind(this)}
                         />
                     </Form>
                 </View>
