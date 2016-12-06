@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TextInput} from 'react-native'
+import {View, Text, StyleSheet, TextInput, Switch} from 'react-native'
 
 import ViewContainer from '../../../common/ViewContainer'
 import AutoExpandingTextInput from './InputComponent/AutoExpanding'
@@ -31,6 +31,7 @@ export default class Forms extends Component {
             text: '',
             limittext: '呦西',
             ptext: '哈哈',
+            swh: false,
             max: 15,
             textarea: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React.',
         }
@@ -87,7 +88,7 @@ export default class Forms extends Component {
                     <Text>
                         4. Form comes
                     </Text>
-                    <Form>
+                    <Form style={{backgroundColor: '#eee', padding: 20}}>
                         <TextInputV
                             style={style.input}
                             validation="required"
@@ -97,6 +98,11 @@ export default class Forms extends Component {
                             style={style.input}
                             validation={format('required', ['length', 1, this.state.max])}
                             errormsg="2"
+                        />
+                        <Switch
+                            validation="required"
+                            onValueChange={(swh) => this.setState({swh})}
+                            value={this.state.swh}
                         />
                     </Form>
                 </View>
