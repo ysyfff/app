@@ -79,13 +79,16 @@ export default (ComposedComponent, onChange, getter) => class extends React.Comp
     componentWillUnmount() {
     }
 
-    //检查本Filed是否通过校验
-    onChange(name) {
-
-        this.props[onChange] && this.props[onChange](name);
-
-        let [showerr, errmsg] = this._v.check(name);
+    //对值进行check
+    check(value) {
+        let [showerr, errmsg] = this._v.check(value);
         this.setState({showerr, errmsg});
+    }
+
+    //当值变化的时候，update到原来的component，并进行check
+    onChange(value) {
+        this.props[onChange] && this.props[onChange](value);
+        this.check(value);
     }
 
     render() {
@@ -120,7 +123,8 @@ export default (ComposedComponent, onChange, getter) => class extends React.Comp
 const style = StyleSheet.create({
     error: {
         position: 'absolute',
-        bottom: -3,
+        bottom: 0,
+        right: 0,
         paddingLeft:4,
         paddingRight:4,
         borderWidth: 1,
