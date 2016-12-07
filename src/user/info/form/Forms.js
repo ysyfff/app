@@ -37,6 +37,8 @@ export default class Forms extends Component {
             timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
             swh: false,
             max: 15,
+            name: '',
+            age: '',
             textarea: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React.',
         }
     }
@@ -104,12 +106,15 @@ export default class Forms extends Component {
                         <TextInputV
                             style={style.input}
                             validation="required"
-                            errormsg="1"
+                            onChangeText={name => this.setState({name})}
+                            value={this.state.name}
                         />
+
                         <TextInputV
                             style={style.input}
                             validation={format('required', ['length', 1, this.state.max])}
-                            errormsg="2"
+                            onChangeText={age => this.setState({age})}
+                            value={this.state.age}
                         />
 
                     </Form>

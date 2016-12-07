@@ -4,7 +4,7 @@ import {TextInput} from 'react-native'
 import FieldEnhance from './FieldEnhance'
 
 
-var TextInputV = FieldEnhance(TextInput);
+var TextInputV = FieldEnhance(TextInput, 'onChangeText');
 
 
 export {

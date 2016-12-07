@@ -20,7 +20,7 @@ class Validation {
         rules: {
             required: [],
             length: [1,2],
-            max: [54]
+            range: [0, 1000]
         }
         */
     }
@@ -47,13 +47,17 @@ class Validation {
         return new Validation(rules || {});
     }
 
+    check(value) {
+        return value == 1 ? [true, '1111'] : [false, '2222'];
+    }
+
 }
 
 let V = new Validation();
 V.parse('required,a:[1,2]')
 
 //在这里能够直接读取到加强后的Component上的props
-export default (ComposedComponent, setter, getter) => class extends React.Component {
+export default (ComposedComponent, onChange, getter) => class extends React.Component {
 
     static displayName = 'FormEnhanceClass';
 
@@ -61,41 +65,50 @@ export default (ComposedComponent, setter, getter) => class extends React.Compon
         super(props);
         /* @param showerr 是否展示错误
         */
+        this._v = null;
         this.state = {
-            showerr: true
+            showerr: false,
+            errmsg: ''
         }
     }
 
     componentDidMount() {
-
+        this._v = V.parse(this.props.validation);
     }
 
     componentWillUnmount() {
     }
 
     //检查本Filed是否通过校验
-    check() {
+    onChange(name) {
 
+        this.props[onChange] && this.props[onChange](name);
+
+        let [showerr, errmsg] = this._v.check(name);
+        this.setState({showerr, errmsg});
     }
 
     render() {
+
+        let props = _.assign({}, this.props);
+        props[onChange] = this.onChange.bind(this);
+
         return (
             <View>
                 {/*
                     Filed
                 */}
                 <ComposedComponent
-                    {...this.props}
+                    {...props}
                     {...this.state}
                 />
-
                 {/*
                     Filed Error
                 */}
                 <If v={this.state.showerr}>
                     <View style={style.error}>
                         <Text>
-                            {this.props.errormsg}
+                            {this.props.errmsg || this.state.errmsg}
                         </Text>
                     </View>
                 </If>
