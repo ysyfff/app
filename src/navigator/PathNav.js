@@ -5,11 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Skin from '../common/Skin'
 
 import PathTabBar from '../tabbar/PathTabBar'
-import Basic from '../user/info/basic/Basic'
-import History from '../user/info/history/History'
-import Walk from '../user/info/walk/Walk'
-import Forms from '../user/info/form/Forms'
+import Basic from '../me/info/basic/Basic'
+import History from '../me/info/history/History'
+import Walk from '../me/info/walk/Walk'
+import Forms from '../me/info/form/Forms'
 import If from '../../component/If'
+import Speed from '../kit/speed/Speed'
+
 
 export default class PathNav extends Component {
     constructor(props) {
@@ -24,7 +26,7 @@ export default class PathNav extends Component {
     render() {
         let me = this;
         const NavDataSource = {
-            initialRoute: 'Myself',
+            initialRoute: 'Kit', //初始路由
             route: {
                 Myself: {
                     renderScene: function(route, navigators) {
@@ -56,6 +58,41 @@ export default class PathNav extends Component {
                             )
                         },
                         style: {backgroundColor: Skin.baseColor}
+                    }
+                },
+                'Kit': {
+                    renderScene: function(route, navigators) {
+                        return <PathTabBar navigators={navigators} initialTab='工具' nav={me}/>;
+                    },
+                    NavBar: {
+                        routeMapper: {
+                            LeftButton: '',
+                            RightButton: '',
+                            Title: (
+                                <Text style={{fontSize: 18}}>常用工具</Text>
+                            )
+                        },
+                        style: {backgroundColor: Skin.baseColor}
+                    }
+                },
+                'Kit.speed': {
+                    renderScene: function(route, navigators) {
+                        return (<Speed />)
+                    },
+                    NavBar: {
+                        routeMapper: {
+                            LeftButton: (
+                                <View style={style.leftButton}>
+                                    <Icon name="angle-left" color="black" size={26} />
+                                </View>
+
+                            ),
+                            RightButton: '',
+                            Title: (
+                                <Text style={{fontSize: 18}}>实时速度</Text>
+                            )
+                        },
+                        style: {backgroundColor: 'gray'}
                     }
                 },
                 'Myself.basicInfo': {

@@ -5,9 +5,10 @@ import {Text, StyleSheet, View} from 'react-native'
 
 import TabBar from '../../component/TabBar'
 
-import Info from '../user/info/Info'
+import Info from '../me/info/Info'
 import Foot from '../foot/Foot'
 import Skin from '../common/Skin'
+import Kit from '../kit/Kit'
 
 export default class PathTabBar extends Component {
     constructor(props) {
@@ -49,6 +50,17 @@ export default class PathTabBar extends Component {
                         me.props.nav.setState({showNav: true});
                     },
                     renderedContent: <Info navigators={me.props.navigators}/>
+                },
+                {
+                    title: '工具',
+                    iconName:'ios-hammer-outline',
+                    selectedIconName:'ios-hammer',
+                    defaultSelected: true,
+                    onPress: () => {
+                        me.props.navigators.resetTo({ident: 'Kit'})
+                        me.props.nav.setState({showNav: true});
+                    },
+                    renderedContent: <Kit navigators={me.props.navigators}/>
                 },
             ]
         }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, ScrollView} from 'react-native'
+import {View, StyleSheet, ScrollView, Text} from 'react-native'
 
 
 export default class ViewContainer extends Component {
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f8f8',
     },
     container: {
-        marginTop: 84
+        marginTop: 84,
     }
 })
