@@ -14,6 +14,11 @@ export default class Kit extends Component {
             ident: 'Kit.speed'
         });
     }
+    _memo() {
+        this.props.navigators.push({
+            ident: 'Kit.memo'
+        });
+    }
     render() {
         return (
             <ViewContainer>
@@ -28,9 +33,9 @@ export default class Kit extends Component {
                         </View>
 
                         <View style={style.grid}>
-                            <TouchableOpacity style={style.opacity}>
+                            <TouchableOpacity style={style.opacity} onPress={this._memo.bind(this)}>
                                 <Text>
-                                    测速
+                                    备忘录
                                 </Text>
                             </TouchableOpacity>
                         </View>

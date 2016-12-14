@@ -11,6 +11,7 @@ import Walk from '../me/info/walk/Walk'
 import Forms from '../me/info/form/Forms'
 import If from '../../component/If'
 import Speed from '../kit/speed/Speed'
+import Memo from '../kit/memo/Memo'
 
 
 export default class PathNav extends Component {
@@ -90,6 +91,26 @@ export default class PathNav extends Component {
                             RightButton: '',
                             Title: (
                                 <Text style={{fontSize: 18}}>实时速度</Text>
+                            )
+                        },
+                        style: {backgroundColor: 'gray'}
+                    }
+                },
+                'Kit.memo': {
+                    renderScene: function(route, navigators) {
+                        return (<Memo />)
+                    },
+                    NavBar: {
+                        routeMapper: {
+                            LeftButton: (
+                                <View style={style.leftButton}>
+                                    <Icon name="angle-left" color="black" size={26} />
+                                </View>
+
+                            ),
+                            RightButton: '',
+                            Title: (
+                                <Text style={{fontSize: 18}}>备忘录</Text>
                             )
                         },
                         style: {backgroundColor: 'gray'}

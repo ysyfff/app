@@ -2,11 +2,10 @@ import React, {Component} from 'react'
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native'
 import ViewContainer from '../../common/ViewContainer'
 
-//纬度
-const LATITUDE = 111712.69150641055729984301412873; //米/度
-
-//经度
-const LONGITUDE = 102834.74258026089786013677476285;
+const R = 6371;
+Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+}
 
 export default class Speed extends Component {
     constructor(props) {
@@ -17,36 +16,69 @@ export default class Speed extends Component {
         };
         this.log = [];
         this.watchID = null;
+        this.timeID = null;
         this.lastPosition = null;
     }
 
     componentDidMount() {
-        this.watchID = navigator.geolocation.watchPosition((position) => {
-                this._calSpeed(position);
-                this.log.push({lat: position.coords.latitude, lon: position.coords.longitude});
-                this.setState({log: this.log});
-            },
-            (error) => alert(JSON.stringify(error)),
-            {enableHighAccuracy: true}
-        );
+        // this.watchID = navigator.geolocation.watchPosition((position) => {
+        //         this._calSpeed(position);
+        //         this.log.push({lat: position.coords.latitude, lon: position.coords.longitude});
+        //         this.setState({log: this.log});
+        //     },
+        //     (error) => alert(JSON.stringify(error)),
+        //     {enableHighAccuracy: true}
+        // );
+        this._getCurrPosition();
     }
 
     componentWillUnmount() {
         this.log = [];
         navigator.geolocation.clearWatch(this.watchID);
+        clearTimeout(this.timeID);
     }
 
+    //计算球面上的两个点的距离
     _calDistance(a, b) {
-        var ad = Math.abs(a.longitude - b.longitude) * LONGITUDE;
-        var bd = Math.abs(a.latitude - b.latitude) * LATITUDE;
-        return Math.sqrt(ad*ad + bd*bd);
+        let [lat1, lon1, lat2, lon2] = [a.latitude, a.longitude, b.latitude, b.longitude];
+        let dLat = (lat2- lat1).toRad();
+        let dLon = (lon2 - lon1).toRad();
+
+        let aa = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                 Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var cc = 2 * Math.atan2(Math.sqrt(aa), Math.sqrt(1-aa));
+        var dd = R * cc;
+
+
+        return dd;
+    }
+
+    _getCurrPosition() {
+        clearTimeout(this.timeID);
+        
+        this.timeID = setTimeout(()=>{
+            navigator.geolocation.getCurrentPosition((position)=>{
+                    position.timestamp = new Date().getTime();
+                    this._calSpeed(position);
+
+
+                    this._getCurrPosition();
+                },
+                (error) => {},
+                {enableHighAccuracy: true}
+            );
+        }, 1000);
     }
 
     _calSpeed(position) {
         let speed = 0;
 
         if(this.lastPosition != null) {
-            var distance = this._calDistance(this.lastPosition.coords, position.coords)/1000;
+            let distance = this._calDistance(this.lastPosition.coords, position.coords)/1000;
+            this.log.push({distance});
+            this.setState({log: this.log});
+
             var time = (position.timestamp - this.lastPosition.timestamp)/1000/3600;
             speed = Math.ceil(distance / time);
 
@@ -58,11 +90,11 @@ export default class Speed extends Component {
     }
 
     render() {
-        let _showLog = (log) => {
+        let _showLog = (log, i) => {
             return (
-                <View>
+                <View key={i}>
                     <Text>
-                        lat: {log.lat}, log: {log.lon}
+                        distance: {log.distance}
                     </Text>
                 </View>
             )
