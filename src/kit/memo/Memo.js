@@ -34,7 +34,7 @@ class Enter extends Component {
 
                     return true;
                 }}>
-                    <Icon  name="plus-circle" color='white' size={18} />
+                    <Icon  name="plus-circle" color='blue' size={18} />
                 </TouchableOpacity>
             </View>
         )
@@ -62,12 +62,30 @@ class Undo extends Component {
                 <View>
                     <ListView
                         enableEmptySections={true}
+                        keyboardShouldPersistTaps={true}
                         dataSource={this.ds.cloneWithRows(this.props.dataSource)}
-                        renderRow={(row)=>{
+                        renderRow={(row, aa, index)=>{
                             return (
-                                <Text>
-                                    {row.text}
-                                </Text>
+                                <View style={undoStyle.row}>
+                                    <View style={undoStyle.textContainer}>
+                                        <Text>
+                                            {row.text}
+                                        </Text>
+                                    </View>
+                                    <View style={undoStyle.btnContainer}>
+                                        <TouchableOpacity style={undoStyle.btn} onPress={() => {
+                                                this.props.onFinish && this.props.onFinish(index);
+                                            }}>
+                                            <Icon name="close" size={18} color={Skin.baseColor}/>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity style={undoStyle.btn} onPress={() => {
+                                                this.props.onDelete && this.props.onDelete(index);
+                                            }}>
+                                            <Icon name="check" size={18} color={Skin.baseColor}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             )
                         }}
                     />
@@ -94,7 +112,17 @@ export default class Memo extends Component {
                     this.setState({undo: this.undo});
                 }}/>
 
-                <Undo dataSource={this.state.undo} />
+                <Undo
+                    dataSource={this.state.undo}
+                    onFinish={(index)=>{
+                        this.undo.splice(index, 1);
+                        this.setState({undo: this.undo});
+                    }}
+                    onDelete={(index)=>{
+                        this.undo.splice(index, 1);
+                        this.setState({undo: this.undo});
+                    }}
+                    />
             </ViewContainer>
         )
     }
@@ -104,6 +132,19 @@ export default class Memo extends Component {
 const undoStyle = StyleSheet.create({
     container: {
         marginTop: 15
+    },
+    row: {
+        flexDirection: 'row'
+    },
+    textContainer: {
+        flex: 5,
+    },
+    btnContainer: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    btn: {
+        flex: 1,
     }
 });
 
