@@ -50,16 +50,6 @@ class Undo extends Component {
         }
     }
 
-    // componentWillReceiveProps() {
-    //     debugger
-    //     this.setState({dataSource: this.props.dataSource})
-    // }
-
-    // shouldComponentUpdate() {
-    //     debugger
-    //     this.setState({dataSource: );
-    //     return true;
-    // }
     render() {
 
         return (
@@ -71,6 +61,7 @@ class Undo extends Component {
                 </View>
                 <View>
                     <ListView
+                        enableEmptySections={true}
                         dataSource={this.ds.cloneWithRows(this.props.dataSource)}
                         renderRow={(row)=>{
                             return (
@@ -85,6 +76,30 @@ class Undo extends Component {
         )
     }
 }
+
+export default class Memo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            undo: []
+        }
+        this.undo = [];
+    }
+
+    render() {
+        return (
+            <ViewContainer style={memoStyle.container}>
+                <Enter onAddEvent={(text) => {
+                    this.undo.push({text: text, time: new Date()});
+                    this.setState({undo: this.undo});
+                }}/>
+
+                <Undo dataSource={this.state.undo} />
+            </ViewContainer>
+        )
+    }
+}
+
 
 const undoStyle = StyleSheet.create({
     container: {
@@ -120,28 +135,6 @@ const enterStyle = StyleSheet.create({
     }
 });
 
-export default class Memo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            undo: []
-        }
-        this.undo = [];
-    }
-
-    render() {
-        return (
-            <ViewContainer style={memoStyle.container}>
-                <Enter onAddEvent={(text) => {
-                    this.undo.push({text: text, time: new Date()});
-                    this.setState({undo: this.undo});
-                }}/>
-
-                <Undo dataSource={this.state.undo} />
-            </ViewContainer>
-        )
-    }
-}
 
 const memoStyle = StyleSheet.create({
     container: {
