@@ -145,6 +145,7 @@ export default class Memo extends Component {
 
 const memoStyle = StyleSheet.create({
     container: {
-        padding: 10
+        paddingLeft: 10,
+        paddingRight: 10
     }
 })

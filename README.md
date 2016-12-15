@@ -95,3 +95,7 @@
 * 在Enhance的时候新增props是可以的，但是如何修改props呢？
   * 已解
     * copy一份props，赋予相应的新值，如果此值是一个函数且props中存在此函数，要在新值中执行原函数，并正确传入参数
+
+
+* ScrollView里面的TouchableOpacity需要点击两次才能出发，为什么
+  * 已解
