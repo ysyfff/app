@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView} from 'react-native'
 import ViewContainer from '../../common/ViewContainer'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -16,21 +16,84 @@ class Enter extends Component {
 
     render() {
         return (
-            <View style={style.enterContainer}>
-                <View style={style.enter}>
-                    <TextInput style={style.input}/>
+            <View style={enterStyle.container}>
+                <View style={enterStyle.enter}>
+                    <TextInput style={enterStyle.input}
+                        onChangeText={(text)=> {
+                            this.setState({text});
+                        }}
+                        value={this.state.text}
+                    />
                 </View>
-                <TouchableOpacity style={style.add}>
-                    <Icon  name="plus-circle" color='pink' size={18} />
+                <TouchableOpacity style={enterStyle.add} onPress={()=>{
+                    debugger
+                    if(this.props.onAddEvent) {
+                        this.props.onAddEvent(this.state.text);
+                        this.setState({text: ''});
+                    }
+
+                    return true;
+                }}>
+                    <Icon  name="plus-circle" color='white' size={18} />
                 </TouchableOpacity>
             </View>
         )
     }
 }
 
-const style = StyleSheet.create({
-    enterContainer: {
-        padding: 10,
+class Undo extends Component {
+    constructor(props) {
+        super(props)
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+            dataSource: this.ds.cloneWithRows([{text: 1}])
+        }
+    }
+
+    // componentWillReceiveProps() {
+    //     debugger
+    //     this.setState({dataSource: this.props.dataSource})
+    // }
+
+    // shouldComponentUpdate() {
+    //     debugger
+    //     this.setState({dataSource: );
+    //     return true;
+    // }
+    render() {
+
+        return (
+            <View style={undoStyle.container}>
+                <View>
+                    <Text>
+                        待办事项
+                    </Text>
+                </View>
+                <View>
+                    <ListView
+                        dataSource={this.ds.cloneWithRows(this.props.dataSource)}
+                        renderRow={(row)=>{
+                            return (
+                                <Text>
+                                    {row.text}
+                                </Text>
+                            )
+                        }}
+                    />
+                </View>
+            </View>
+        )
+    }
+}
+
+const undoStyle = StyleSheet.create({
+    container: {
+        marginTop: 15
+    }
+});
+
+const enterStyle = StyleSheet.create({
+    container: {
         flexDirection: 'row'
     },
     enter: {
@@ -42,7 +105,8 @@ const style = StyleSheet.create({
     },
     input: {
         height: 28,
-        paddingLeft: 10
+        paddingLeft: 10,
+        fontSize: 13
     },
     add: {
         flex: 1,
@@ -60,15 +124,27 @@ export default class Memo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            undo: []
         }
+        this.undo = [];
     }
 
     render() {
         return (
-            <ViewContainer>
-                <Enter />
+            <ViewContainer style={memoStyle.container}>
+                <Enter onAddEvent={(text) => {
+                    this.undo.push({text: text, time: new Date()});
+                    this.setState({undo: this.undo});
+                }}/>
+
+                <Undo dataSource={this.state.undo} />
             </ViewContainer>
         )
     }
 }
+
+const memoStyle = StyleSheet.create({
+    container: {
+        padding: 10
+    }
+})

@@ -1,12 +1,20 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, ScrollView, Text} from 'react-native'
+import {View, StyleSheet, ScrollView, Text, TextInputState} from 'react-native'
 
 
 export default class ViewContainer extends Component {
     render() {
         return (
-            <ScrollView style={styles.scrollContainer}>
-                <View style={[this.props.noNav ? null : styles.container, this.props.style]}>
+            <ScrollView
+                showsVerticalScrollIndicator={true}
+                automaticallyAdjustContentInsets={false}
+                contentContainerStyle={styles.content}
+                keyboardDismissMode='on-drag'
+                keyboardShouldPersistTaps={true}
+                style={styles.scrollContainer}>
+
+                <View
+                    style={[this.props.noNav ? null : styles.container, this.props.style]}>
                     {this.props.children}
                 </View>
             </ScrollView>
@@ -17,8 +25,9 @@ export default class ViewContainer extends Component {
 const styles = StyleSheet.create({
     scrollContainer: {
         flex: 1,
-        marginTop: -20, // ScrollView会处理掉StatusBar的高度问题使用的是marginTop: 20属性
         backgroundColor: '#f8f8f8',
+        borderLeftWidth: 1,
+        borderLeftColor: '#ddd'
     },
     container: {
         marginTop: 84,
