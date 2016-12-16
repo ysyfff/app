@@ -13,13 +13,6 @@ export default class ViewContainer extends Component {
                 keyboardDismissMode='on-drag'
                 keyboardShouldPersistTaps={true}
                 style={styles.scrollContainer}
-                onStartShouldSetResponderCapture={(e) => {
-            const target = e.nativeEvent.target;
-            if (target !== React.findNodeHandle(this.refs.email) && target !== React.findNodeHandle(this.refs.password)) {
-                        this.refs.email.blur();
-                        this.refs.password.blur();
-      }
-    }}
                 >
 
                 <View
