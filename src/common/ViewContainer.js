@@ -9,9 +9,18 @@ export default class ViewContainer extends Component {
                 showsVerticalScrollIndicator={true}
                 automaticallyAdjustContentInsets={false}
                 contentContainerStyle={styles.content}
+
                 keyboardDismissMode='on-drag'
                 keyboardShouldPersistTaps={true}
-                style={styles.scrollContainer}>
+                style={styles.scrollContainer}
+                onStartShouldSetResponderCapture={(e) => {
+            const target = e.nativeEvent.target;
+            if (target !== React.findNodeHandle(this.refs.email) && target !== React.findNodeHandle(this.refs.password)) {
+                        this.refs.email.blur();
+                        this.refs.password.blur();
+      }
+    }}
+                >
 
                 <View
                     style={[this.props.noNav ? null : styles.container, this.props.style]}>

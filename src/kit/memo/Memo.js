@@ -53,7 +53,7 @@ class Undo extends Component {
             <View style={undoStyle.container}>
                 <View style={undoStyle.title}>
                     <Text>
-                        待办事项
+                        待办事项 ({this.props.dataSource.length})
                     </Text>
                 </View>
                 <View style={undoStyle.content}>
@@ -104,7 +104,7 @@ class Done extends Component {
             <View style={undoStyle.container}>
                 <View style={doneStyle.title}>
                     <Text>
-                        已办事项
+                        已办事项 ({this.props.dataSource.length})
                     </Text>
                 </View>
                 <View style={doneStyle.content}>
