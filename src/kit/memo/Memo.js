@@ -4,6 +4,7 @@ import ViewContainer from '../../common/ViewContainer'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import _ from 'lodash'
 import Skin from '../../common/Skin'
+import If from '../../../component/If'
 
 class Enter extends Component {
     constructor(props) {
@@ -44,22 +45,18 @@ class Enter extends Component {
 class Undo extends Component {
     constructor(props) {
         super(props)
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            dataSource: this.ds.cloneWithRows([])
-        }
     }
 
     render() {
 
         return (
             <View style={undoStyle.container}>
-                <View>
+                <View style={undoStyle.title}>
                     <Text>
                         待办事项
                     </Text>
                 </View>
-                <View>
+                <View style={undoStyle.content}>
                     {this.props.dataSource.map((row, index)=>{
                         return (
                             <View style={undoStyle.row} key={index}>
@@ -68,20 +65,22 @@ class Undo extends Component {
                                         {row.text}
                                     </Text>
                                 </View>
-
+                                {/*
                                 <View style={undoStyle.btnContainer}>
-                                    <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                            this.props.onDelete && this.props.onDelete(index);
-                                        }}>
-                                        <Icon name="close" size={18} color={Skin.baseColor}/>
-                                    </TouchableOpacity>
+                                   <TouchableOpacity style={undoStyle.btn} onPress={() => {
+                                           this.props.onDelete && this.props.onDelete(index);
+                                       }}>
+                                       <Icon name="close" size={18} color={Skin.baseColor}/>
+                                   </TouchableOpacity>
 
-                                    <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                            this.props.onFinish && this.props.onFinish(index);
-                                        }}>
-                                        <Icon name="check" size={18} color={Skin.baseColor}/>
-                                    </TouchableOpacity>
+                                   <TouchableOpacity style={undoStyle.btn} onPress={() => {
+                                           this.props.onFinish && this.props.onFinish(index);
+                                       }}>
+                                       <Icon name="check" size={18} color={Skin.baseColor}/>
+                                   </TouchableOpacity>
                                 </View>
+                                */}
+
                             </View>
                         )
                     })}
@@ -95,26 +94,47 @@ class Undo extends Component {
 class Done extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            showAll: false
+        }
     }
 
     render() {
         return (
             <View style={undoStyle.container}>
-                <View>
+                <View style={doneStyle.title}>
                     <Text>
                         已办事项
                     </Text>
                 </View>
-                <View>
+                <View style={doneStyle.content}>
                     {this.props.dataSource.map((row, index)=>{
                         return (
-                            <View style={undoStyle.row} key={index}>
-                                <View style={undoStyle.textContainer}>
-                                    <Text>
-                                        {row.text}
-                                    </Text>
+                            <If v={index ==0 || this.state.showAll} key={index}>
+                                <View style={doneStyle.row} >
+                                    <View style={doneStyle.textContainer}>
+                                        <Text>
+                                            {row.text}
+                                        </Text>
+                                    </View>
+                                    <If v={index == 0}>
+                                        <View>
+                                            <TouchableOpacity style={doneStyle.showAll} onPress={()=>{
+                                                this.setState({
+                                                    showAll: !this.state.showAll
+                                                })
+                                            }}>
+                                                <If v={this.state.showAll}>
+                                                    <Icon name="angle-down" size={18} color={Skin.baseColor} />
+                                                </If>
+                                                <If v={!this.state.showAll}>
+                                                    <Icon name="angle-right" size={18} color={Skin.baseColor} />
+                                                </If>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </If>
                                 </View>
-                            </View>
+                            </If>
                         )
                     })}
                 </View>
@@ -191,15 +211,50 @@ export default class Memo extends Component {
 }
 
 const doneStyle = StyleSheet.create({
-
+    container: {
+        marginTop: 25
+    },
+    title: {
+        marginBottom: 5
+    },
+    content: {
+        borderTopWidth: 1,
+        borderTopColor: 'pink'
+    },
+    row: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: 'pink',
+        height: 35,
+        alignItems: 'center',
+        paddingLeft: 8
+    },
+    textContainer: {
+        flex: 5,
+    },
+    showAll: {
+        padding: 8
+    }
 });
 
 const undoStyle = StyleSheet.create({
     container: {
-        marginTop: 15
+        marginTop: 25
+    },
+    title: {
+        marginBottom: 5
+    },
+    content: {
+        borderTopWidth: 1,
+        borderTopColor: 'pink'
     },
     row: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: 35,
+        alignItems: 'center',
+        paddingLeft: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: 'pink',
     },
     textContainer: {
         flex: 5,
@@ -207,11 +262,13 @@ const undoStyle = StyleSheet.create({
     btnContainer: {
         flex: 1,
         flexDirection: 'row',
+
     },
     btn: {
         flex: 1,
     }
 });
+
 
 const enterStyle = StyleSheet.create({
     container: {
