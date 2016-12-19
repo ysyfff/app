@@ -73,12 +73,12 @@ const doneStyle = StyleSheet.create({
     },
     content: {
         borderTopWidth: 1,
-        borderTopColor: 'pink'
+        borderTopColor: Skin.lightBlue,
     },
     row: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderBottomColor: 'pink',
+        borderBottomColor: Skin.lightBlue,
         height: 35,
         alignItems: 'center',
         paddingLeft: 8

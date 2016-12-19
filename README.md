@@ -99,3 +99,4 @@
 
 * ScrollView里面的TouchableOpacity需要点击两次才能出发，为什么
   * 已解
+    * 在ScrollView上加上`keyboardDismissMode='on-drag'` `keyboardShouldPersistTaps={true}`这两个属性可解决

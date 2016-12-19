@@ -48,7 +48,7 @@ export default class Undo extends Component {
                                             }
                                             this.setState({nth: index});
                                        }}>
-                                       <Icon name="circle-thin" size={16} color={Skin.baseColor}/>
+                                       <Icon name="angle-right" size={18} color={Skin.baseColor}/>
                                    </TouchableOpacity>
 
                                 </View>
@@ -86,7 +86,7 @@ const undoStyle = StyleSheet.create({
     },
     content: {
         borderTopWidth: 1,
-        borderTopColor: 'pink'
+        borderTopColor: Skin.lightBlue,
     },
     row: {
         flexDirection: 'row',
@@ -94,7 +94,7 @@ const undoStyle = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 8,
         borderBottomWidth: 1,
-        borderBottomColor: 'pink',
+        borderBottomColor: Skin.lightBlue,
     },
     textContainer: {
         flex: 1,
