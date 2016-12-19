@@ -6,8 +6,6 @@ import _ from 'lodash'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 
-
-
 export default class Enter extends Component {
     constructor(props) {
         super(props);
@@ -29,9 +27,12 @@ export default class Enter extends Component {
                     />
                 </View>
                 <TouchableOpacity style={enterStyle.add} onPress={()=>{
-                    debugger
-                    if(this.props.onAddEvent) {
-                        this.props.onAddEvent(this.state.text);
+                    if(_.trim(this.state.text)) {
+                        if(this.props.onAddEvent) {
+                            this.props.onAddEvent(this.state.text);
+                            this.setState({text: ''});
+                        }
+                    }else{
                         this.setState({text: ''});
                     }
 

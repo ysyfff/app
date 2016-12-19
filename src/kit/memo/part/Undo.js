@@ -11,6 +11,10 @@ import If from '../../../../component/If'
 export default class Undo extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            showOper: false,
+            nth: 0
+        }
     }
 
     render() {
@@ -34,10 +38,16 @@ export default class Undo extends Component {
 
                                 <View style={undoStyle.btnContainer}>
                                    <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                           this.props.onDelete && this.props.onDelete(index);
+                                            if(index == this.state.nth) {
+                                                this.setState({showOper: !this.state.showOper});
+                                            }else{
+                                                this.setState({showOper: true});
+                                            }
+                                            this.setState({nth: index});
                                        }}>
-                                       <Icon name="cog" size={18} color={Skin.baseColor}/>
+                                       <Icon name="circle-thin" size={16} color={Skin.baseColor}/>
                                    </TouchableOpacity>
+
                                 </View>
                                 {/*
                                 <View style={undoStyle.btnContainer}>
@@ -58,7 +68,20 @@ export default class Undo extends Component {
                             </View>
                         )
                     })}
-
+                    <If v={this.state.showOper}>
+                        <View style={[undoStyle.oper, {top: this.state.nth * 35}]}>
+                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
+                                     this.props.onFinish && this.props.onFinish(this.state.nth);
+                                 }}>
+                                 <Icon name="check" size={16} color={Skin.baseColor}/>
+                             </TouchableOpacity>
+                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
+                                     this.props.onDelete && this.props.onDelete(this.state.nth);
+                                 }}>
+                                 <Icon name="close" size={16} color={Skin.baseColor}/>
+                             </TouchableOpacity>
+                        </View>
+                    </If>
                 </View>
             </View>
         )
@@ -85,14 +108,36 @@ const undoStyle = StyleSheet.create({
         borderBottomColor: 'pink',
     },
     textContainer: {
-        flex: 5,
+        flex: 1,
     },
     btnContainer: {
-        flex: 1,
-        flexDirection: 'row',
-
+        alignItems: 'center',
     },
     btn: {
+        padding: 8
+    },
+    oper: {
+        // position: 'absolute',
+        // bottom: -200,
+        // left: 100
+        position: 'absolute',
+        top: 0,
+        right: 40,
         flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 35,
+        justifyContent: 'center',
+    },
+    operBtn: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 30,
+        width: 26,
+        height: 26,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#eee',
+        marginLeft: 3,
     }
 });
