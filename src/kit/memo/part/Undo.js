@@ -20,7 +20,10 @@ export default class Undo extends Component {
     render() {
 
         return (
-            <View style={undoStyle.container}>
+            <View
+                style={undoStyle.container}
+
+                >
                 <View style={undoStyle.title}>
                     <Text>
                         待办事项 ({this.props.dataSource.length})
@@ -49,22 +52,6 @@ export default class Undo extends Component {
                                    </TouchableOpacity>
 
                                 </View>
-                                {/*
-                                <View style={undoStyle.btnContainer}>
-                                   <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                           this.props.onDelete && this.props.onDelete(index);
-                                       }}>
-                                       <Icon name="close" size={18} color={Skin.baseColor}/>
-                                   </TouchableOpacity>
-
-                                   <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                           this.props.onFinish && this.props.onFinish(index);
-                                       }}>
-                                       <Icon name="check" size={18} color={Skin.baseColor}/>
-                                   </TouchableOpacity>
-                                </View>
-                                */}
-
                             </View>
                         )
                     })}
@@ -72,11 +59,13 @@ export default class Undo extends Component {
                         <View style={[undoStyle.oper, {top: this.state.nth * 35}]}>
                              <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
                                      this.props.onFinish && this.props.onFinish(this.state.nth);
+                                     this.setState({showOper: false});
                                  }}>
                                  <Icon name="check" size={16} color={Skin.baseColor}/>
                              </TouchableOpacity>
                              <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
                                      this.props.onDelete && this.props.onDelete(this.state.nth);
+                                     this.setState({showOper: false});
                                  }}>
                                  <Icon name="close" size={16} color={Skin.baseColor}/>
                              </TouchableOpacity>
