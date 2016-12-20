@@ -3,10 +3,11 @@ import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView, AsyncStor
 import ViewContainer from '../../../common/ViewContainer'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import _ from 'lodash'
+import D from '../../../common/D'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 
-
+alert(D.format(new Date(), 'YYYY-M-D hh:m:ss SS'));
 
 export default class Undo extends Component {
     constructor(props) {
@@ -22,7 +23,6 @@ export default class Undo extends Component {
         return (
             <View
                 style={undoStyle.container}
-
                 >
                 <View style={undoStyle.title}>
                     <Text>
@@ -38,7 +38,13 @@ export default class Undo extends Component {
                                         {row.text}
                                     </Text>
                                 </View>
-
+                                <View style={undoStyle.info}>
+                                    <View style={undoStyle.timeContainer}>
+                                        <Text style={undoStyle.time}>
+                                            {row.time}
+                                        </Text>
+                                    </View>
+                                </View>
                                 <View style={undoStyle.btnContainer}>
                                    <TouchableOpacity style={undoStyle.btn} onPress={() => {
                                             if(index == this.state.nth) {
@@ -128,5 +134,16 @@ const undoStyle = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#eee',
         marginLeft: 3,
+    },
+    info: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    timeContainer: {
+        padding: 2
+    },
+    time: {
+        fontSize: 8,
+        color: '#aaa'
     }
 });
