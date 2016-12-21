@@ -47,7 +47,7 @@ export default class Undo extends Component {
                                 <View style={{flex: 1}}>
                                     <View style={{flexDirection: 'row', flex: 1}}>
                                         <View style={undoStyle.textContainer}>
-                                            <Text>
+                                            <Text style={{fontSize: 20}}>
                                                 {row.text}
                                             </Text>
                                         </View>
@@ -63,8 +63,8 @@ export default class Undo extends Component {
                                     </View>
 
                                     <View style={{flex: 1, flexDirection: 'row'}}>
-                                        <View>
-                                            <Text>
+                                        <View style={{marginTop: 5}}>
+                                            <Text style={{color: 'gray', fontSize: 12}}>
                                                 {row.result}
                                             </Text>
                                         </View>
@@ -103,14 +103,14 @@ export default class Undo extends Component {
 
                                              {/*完成按钮*/}
                                              <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
-                                                     this.props.onFinish && this.props.onFinish(this.state.nth);
+                                                     this.props.onFinish && this.props.onFinish(index);
                                                  }}>
                                                  <Icon name="check" size={10} color={Skin.lightBlue}/>
                                              </TouchableOpacity>
 
                                              {/*删除按钮*/}
                                              <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
-                                                     this.props.onDelete && this.props.onDelete(this.state.nth);
+                                                     this.props.onDelete && this.props.onDelete(index);
                                                  }}>
                                                  <Icon name="close" size={10} color={Skin.lightBlue}/>
                                              </TouchableOpacity>
