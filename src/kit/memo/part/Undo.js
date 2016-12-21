@@ -6,14 +6,16 @@ import _ from 'lodash'
 import D from '../../../common/D'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
+import Enter from './Enter'
 
-alert(D.format(new Date(), 'YYYY-M-D hh:m:ss SS'));
+const LINE_HEIGHT = 45;
 
 export default class Undo extends Component {
     constructor(props) {
         super(props)
         this.state = {
             showOper: false,
+            showPlus: false,
             nth: 0
         }
     }
@@ -38,15 +40,21 @@ export default class Undo extends Component {
                                         {row.text}
                                     </Text>
                                 </View>
+
+                                {/*时间显示*/}
                                 <View style={undoStyle.info}>
                                     <View style={undoStyle.timeContainer}>
                                         <Text style={undoStyle.time}>
-                                            {row.time}
+                                            {D.format(row.time, 'MM-DD')}
                                         </Text>
                                     </View>
                                 </View>
+
+                                {/*按钮显示*/}
                                 <View style={undoStyle.btnContainer}>
                                    <TouchableOpacity style={undoStyle.btn} onPress={() => {
+                                            this.setState({showPlus: false});
+
                                             if(index == this.state.nth) {
                                                 this.setState({showOper: !this.state.showOper});
                                             }else{
@@ -62,19 +70,38 @@ export default class Undo extends Component {
                         )
                     })}
                     <If v={this.state.showOper}>
-                        <View style={[undoStyle.oper, {top: this.state.nth * 35}]}>
+                        <View style={[undoStyle.oper, {top: this.state.nth * LINE_HEIGHT}]}>
                              <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
                                      this.props.onFinish && this.props.onFinish(this.state.nth);
                                      this.setState({showOper: false});
                                  }}>
                                  <Icon name="check" size={16} color={Skin.baseColor}/>
                              </TouchableOpacity>
+
                              <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
                                      this.props.onDelete && this.props.onDelete(this.state.nth);
                                      this.setState({showOper: false});
                                  }}>
                                  <Icon name="close" size={16} color={Skin.baseColor}/>
                              </TouchableOpacity>
+
+                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
+
+                                     this.setState({showOper: false, showPlus: true});
+                                 }}>
+                                 <Icon name="plus" size={16} color={Skin.baseColor}/>
+                             </TouchableOpacity>
+                        </View>
+                    </If>
+
+                    <If v={this.state.showPlus}>
+                        <View style={[undoStyle.plus, {top: this.state.nth * LINE_HEIGHT + 20}]}>
+                            <Enter
+                                inputStyle={{height: 20}}
+                                iconName='check'
+                                iconColor='black'
+                                iconSize={12}
+                            />
                         </View>
                     </If>
                 </View>
@@ -96,17 +123,18 @@ const undoStyle = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        height: 35,
-        alignItems: 'center',
+        height: LINE_HEIGHT,
         paddingLeft: 8,
         borderBottomWidth: 1,
         borderBottomColor: Skin.lightBlue,
     },
     textContainer: {
         flex: 1,
+        marginTop: 5
     },
     btnContainer: {
         alignItems: 'center',
+        width: 30,
     },
     btn: {
         padding: 8
@@ -121,29 +149,34 @@ const undoStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 35,
+        height: LINE_HEIGHT,
         justifyContent: 'center',
     },
     operBtn: {
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 30,
-        width: 26,
-        height: 26,
+        width: 30,
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#eee',
         marginLeft: 3,
     },
     info: {
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start'
+
     },
     timeContainer: {
-        padding: 2
+        marginTop: 8
     },
     time: {
         fontSize: 8,
         color: '#aaa'
+    },
+
+    plus: {
+        position: 'absolute',
+        left: 8,
+        right: 60
     }
 });

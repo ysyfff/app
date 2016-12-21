@@ -6,6 +6,14 @@ import _ from 'lodash'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 
+
+/*
+@props enterStyle
+@props inputStyle
+@props btnStyle
+@props iconName
+@props iconColor
+*/
 export default class Enter extends Component {
     constructor(props) {
         super(props);
@@ -16,17 +24,20 @@ export default class Enter extends Component {
     }
 
     render() {
+        let iconName = this.props.iconName || 'plus-circle';
+        let iconColor = this.props.iconColor || 'blue';
+        let iconSize = this.props.iconSize || 18;
         return (
             <View style={enterStyle.container}>
-                <View style={enterStyle.enter}>
-                    <TextInput style={enterStyle.input}
+                <View style={[enterStyle.enter, this.props.enterStyle]}>
+                    <TextInput style={[enterStyle.input, this.props.inputStyle]}
                         onChangeText={(text)=> {
                             this.setState({text});
                         }}
                         value={this.state.text}
                     />
                 </View>
-                <TouchableOpacity style={enterStyle.add} onPress={()=>{
+                <TouchableOpacity style={[enterStyle.btn, this.props.btnStyle]} onPress={()=>{
                     if(_.trim(this.state.text)) {
                         if(this.props.onAddEvent) {
                             this.props.onAddEvent(this.state.text);
@@ -38,7 +49,7 @@ export default class Enter extends Component {
 
                     return true;
                 }}>
-                    <Icon  name="plus-circle" color='blue' size={18} />
+                    <Icon  name={iconName} color={iconColor} size={iconSize} />
                 </TouchableOpacity>
             </View>
         )
@@ -62,7 +73,7 @@ const enterStyle = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 13
     },
-    add: {
+    btn: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

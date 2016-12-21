@@ -62,7 +62,10 @@ export default class Memo extends Component {
                         let done = this.undo.splice(index, 1);
                         //新增done
                         this.done.unshift(done[0]);
+                        //存储新增的done
                         AsyncStorage.setItem('@done', JSON.stringify(this.done));
+                        //存储改变后的undo
+                        AsyncStorage.setItem('@undo', JSON.stringify(this.undo));
                         this.setState({undo: this.undo, done: this.done});
                     }}
                     onDelete={(index)=>{
@@ -76,21 +79,6 @@ export default class Memo extends Component {
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const memoStyle = StyleSheet.create({

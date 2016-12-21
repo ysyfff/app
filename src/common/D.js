@@ -10,10 +10,8 @@ class D {
     toDate(date) {
         let res = null;
 
-        if(_.isNumber(date)) {
+        if(_.isNumber(date) || _.isString(date)) {
             res = new Date(date);
-        }else if(_.isString(date)) { //兼容IE
-            res = new Date(date.replace(/\-/g, '/'));
         }else if(_.isDate(date)) {
             res = date;
         }else{
