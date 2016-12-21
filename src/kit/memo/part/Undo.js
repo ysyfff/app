@@ -147,12 +147,13 @@ const undoStyle = StyleSheet.create({
         marginTop: 5
     },
     btnContainer: {
+        justifyContent: 'center',
         alignItems: 'center',
         height: LINE_HEIGHT,
         width: 30,
     },
     btn: {
-        padding: 8
+        padding: 8,
     },
     oper: {
         // position: 'absolute',
