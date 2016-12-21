@@ -74,8 +74,10 @@ export default class Undo extends Component {
                                             <View style={[undoStyle.plus]}>
                                                 <Enter
                                                     inputStyle={{height: 20}}
+                                                    enterStyle={{borderColor: Skin.lightBlue}}
+                                                    btnStyle={{borderColor: Skin.lightBlue, backgroundColor: Skin.lightBlue}}
                                                     iconName='check'
-                                                    iconColor='black'
+                                                    iconColor={Skin.baseColor}
                                                     iconSize={12}
                                                     placeholder='记录待办结果'
                                                     value={row.result}
@@ -194,7 +196,7 @@ const undoStyle = StyleSheet.create({
     },
     plusBtn: {
         position: 'relative',
-        top: -2,
+        top: -1,
         padding: 5,
         borderWidth: 1,
         borderColor: '#ddd',
@@ -207,7 +209,7 @@ const undoStyle = StyleSheet.create({
     },
     plus: {
         position: 'absolute',
-        top: -1,
+        top: 0,
         left: 0,
         right: 120,
         zIndex: 1,
