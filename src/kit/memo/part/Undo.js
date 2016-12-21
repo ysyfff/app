@@ -148,6 +148,7 @@ const undoStyle = StyleSheet.create({
     },
     btnContainer: {
         alignItems: 'center',
+        height: LINE_HEIGHT,
         width: 30,
     },
     btn: {
