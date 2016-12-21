@@ -40,7 +40,7 @@ class D {
                 let vv = '000' + v;
                 let vl = vv.length;
 
-                pattern = pattern.replace(RegExp.$1, vv.substr(vl - Math.max((v+'').length, RegExp.$1.length), vl));
+                pattern = pattern.replace(RegExp.$1, vv.substr(vl - Math.max((v+'').length), vl));
             }
         }
 

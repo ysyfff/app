@@ -8,7 +8,7 @@ import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 import Enter from './Enter'
 
-const LINE_HEIGHT = 45;
+const LINE_HEIGHT = 50;
 
 export default class Undo extends Component {
     constructor(props) {
@@ -35,19 +35,37 @@ export default class Undo extends Component {
                     {this.props.dataSource.map((row, index)=>{
                         return (
                             <View style={undoStyle.row} key={index}>
-                                <View style={undoStyle.textContainer}>
-                                    <Text>
-                                        {row.text}
-                                    </Text>
-                                </View>
+                                <View style={{flex: 1}}>
+                                    <View style={{flexDirection: 'row', flex: 1}}>
+                                        <View style={undoStyle.textContainer}>
+                                            <Text>
+                                                {row.text}
+                                            </Text>
+                                        </View>
 
-                                {/*时间显示*/}
-                                <View style={undoStyle.info}>
-                                    <View style={undoStyle.timeContainer}>
-                                        <Text style={undoStyle.time}>
-                                            {D.format(row.time, 'MM-DD')}
-                                        </Text>
+                                        {/*时间显示*/}
+                                        <View style={undoStyle.info}>
+                                            <View style={undoStyle.timeContainer}>
+                                                <Text style={undoStyle.time}>
+                                                    {D.format(row.time, 'MM-DD')}
+                                                </Text>
+                                            </View>
+                                        </View>
                                     </View>
+
+                                    {/*记录待办结果Button*/}
+                                    <TouchableOpacity
+                                        style={undoStyle.plusBtn}
+                                        onPress={() => {
+                                            if(index == this.state.nth) {
+                                                this.setState({showPlus: !this.state.showPlus});
+                                            }else{
+                                                this.setState({ nth: index, showPlus: true});
+                                            }
+
+                                         }}>
+                                         <Icon name="plus" size={10} color={Skin.lightBlue}/>
+                                     </TouchableOpacity>
                                 </View>
 
                                 {/*按钮显示*/}
@@ -85,22 +103,18 @@ export default class Undo extends Component {
                                  <Icon name="close" size={16} color={Skin.baseColor}/>
                              </TouchableOpacity>
 
-                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
 
-                                     this.setState({showOper: false, showPlus: true});
-                                 }}>
-                                 <Icon name="plus" size={16} color={Skin.baseColor}/>
-                             </TouchableOpacity>
                         </View>
                     </If>
 
                     <If v={this.state.showPlus}>
-                        <View style={[undoStyle.plus, {top: this.state.nth * LINE_HEIGHT + 20}]}>
+                        <View style={[undoStyle.plus, {top: this.state.nth * LINE_HEIGHT + 25}]}>
                             <Enter
                                 inputStyle={{height: 20}}
                                 iconName='check'
                                 iconColor='black'
                                 iconSize={12}
+                                placeholder='记录待办结果'
                             />
                         </View>
                     </If>
@@ -173,10 +187,20 @@ const undoStyle = StyleSheet.create({
         fontSize: 8,
         color: '#aaa'
     },
-
+    plusBtn: {
+        padding: 5,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 22,
+        height: 22,
+        marginBottom: 2,
+    },
     plus: {
         position: 'absolute',
-        left: 8,
+        left: 40,
         right: 60
     }
 });
