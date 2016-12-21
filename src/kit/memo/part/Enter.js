@@ -24,13 +24,17 @@ export default class Enter extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({text: this.props.value || ''});
+    }
+
     render() {
         let iconName = this.props.iconName || 'plus-circle';
         let iconColor = this.props.iconColor || 'blue';
         let iconSize = this.props.iconSize || 18;
         let placeholder = this.props.placeholder || '添加待办事项';
         let placeholderTextColor  = this.props.placeholderTextColor || '';
-        
+
         return (
             <View style={enterStyle.container}>
                 <View style={[enterStyle.enter, this.props.enterStyle]}>

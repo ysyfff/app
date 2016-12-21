@@ -14,10 +14,18 @@ export default class Undo extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            showOper: false,
-            showPlus: false,
+            show: [],
             nth: 0
         }
+    }
+
+    componentDidMount() {
+
+        let show = this.props.dataSource.map((row, index) => {
+            return false;
+        });
+
+        this.setState({show});
     }
 
     render() {
@@ -33,6 +41,7 @@ export default class Undo extends Component {
                 </View>
                 <View style={undoStyle.content}>
                     {this.props.dataSource.map((row, index)=>{
+
                         return (
                             <View style={undoStyle.row} key={index}>
                                 <View style={{flex: 1}}>
@@ -53,71 +62,64 @@ export default class Undo extends Component {
                                         </View>
                                     </View>
 
-                                    {/*记录待办结果Button*/}
-                                    <TouchableOpacity
-                                        style={undoStyle.plusBtn}
-                                        onPress={() => {
-                                            if(index == this.state.nth) {
-                                                this.setState({showPlus: !this.state.showPlus});
-                                            }else{
-                                                this.setState({ nth: index, showPlus: true});
-                                            }
+                                    <View style={{flex: 1, flexDirection: 'row'}}>
+                                        <View>
+                                            <Text>
+                                                {row.result}
+                                            </Text>
+                                        </View>
 
-                                         }}>
-                                         <Icon name="plus" size={10} color={Skin.lightBlue}/>
-                                     </TouchableOpacity>
-                                </View>
+                                        {/*记录待办结果Enter*/}
+                                        <If v={this.state.show[index]}>
+                                            <View style={[undoStyle.plus]}>
+                                                <Enter
+                                                    inputStyle={{height: 20}}
+                                                    iconName='check'
+                                                    iconColor='black'
+                                                    iconSize={12}
+                                                    placeholder='记录待办结果'
+                                                    value={row.result}
+                                                    onAddEvent={(text) => {
+                                                        this.props.onPlus && this.props.onPlus(index, text);
+                                                        let show = _.assign({}, this.state.show);
+                                                        show[index] = !show[index];
+                                                        this.setState({show});
+                                                    }}
+                                                />
+                                            </View>
+                                        </If>
 
-                                {/*按钮显示*/}
-                                <View style={undoStyle.btnContainer}>
-                                   <TouchableOpacity style={undoStyle.btn} onPress={() => {
-                                            this.setState({showPlus: false});
+                                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                            {/*记录待办结果Button*/}
+                                            <TouchableOpacity
+                                                style={undoStyle.plusBtn}
+                                                onPress={() => {
+                                                    let show = _.assign({}, this.state.show);
+                                                    show[index] = !show[index];
+                                                    this.setState({show});
+                                                 }}>
+                                                 <Icon name="plus" size={10} color={Skin.lightBlue}/>
+                                             </TouchableOpacity>
 
-                                            if(index == this.state.nth) {
-                                                this.setState({showOper: !this.state.showOper});
-                                            }else{
-                                                this.setState({showOper: true});
-                                            }
-                                            this.setState({nth: index});
-                                       }}>
-                                       <Icon name="angle-right" size={18} color={Skin.baseColor}/>
-                                   </TouchableOpacity>
+                                             {/*完成按钮*/}
+                                             <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
+                                                     this.props.onFinish && this.props.onFinish(this.state.nth);
+                                                 }}>
+                                                 <Icon name="check" size={10} color={Skin.lightBlue}/>
+                                             </TouchableOpacity>
 
+                                             {/*删除按钮*/}
+                                             <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
+                                                     this.props.onDelete && this.props.onDelete(this.state.nth);
+                                                 }}>
+                                                 <Icon name="close" size={10} color={Skin.lightBlue}/>
+                                             </TouchableOpacity>
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
                         )
                     })}
-                    <If v={this.state.showOper}>
-                        <View style={[undoStyle.oper, {top: this.state.nth * LINE_HEIGHT}]}>
-                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
-                                     this.props.onFinish && this.props.onFinish(this.state.nth);
-                                     this.setState({showOper: false});
-                                 }}>
-                                 <Icon name="check" size={16} color={Skin.baseColor}/>
-                             </TouchableOpacity>
-
-                             <TouchableOpacity style={undoStyle.operBtn} onPress={() => {
-                                     this.props.onDelete && this.props.onDelete(this.state.nth);
-                                     this.setState({showOper: false});
-                                 }}>
-                                 <Icon name="close" size={16} color={Skin.baseColor}/>
-                             </TouchableOpacity>
-
-
-                        </View>
-                    </If>
-
-                    <If v={this.state.showPlus}>
-                        <View style={[undoStyle.plus, {top: this.state.nth * LINE_HEIGHT + 25}]}>
-                            <Enter
-                                inputStyle={{height: 20}}
-                                iconName='check'
-                                iconColor='black'
-                                iconSize={12}
-                                placeholder='记录待办结果'
-                            />
-                        </View>
-                    </If>
                 </View>
             </View>
         )
@@ -139,6 +141,7 @@ const undoStyle = StyleSheet.create({
         flexDirection: 'row',
         height: LINE_HEIGHT,
         paddingLeft: 8,
+        paddingRight: 8,
         borderBottomWidth: 1,
         borderBottomColor: Skin.lightBlue,
     },
@@ -190,19 +193,24 @@ const undoStyle = StyleSheet.create({
         color: '#aaa'
     },
     plusBtn: {
+        position: 'relative',
+        top: -2,
         padding: 5,
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 22,
-        height: 22,
-        marginBottom: 2,
+        width: 24,
+        height: 24,
+        marginRight: 8
     },
     plus: {
         position: 'absolute',
-        left: 40,
-        right: 60
+        top: -1,
+        left: 0,
+        right: 120,
+        zIndex: 1,
+        backgroundColor: 'white'
     }
 });

@@ -74,6 +74,18 @@ export default class Memo extends Component {
                         AsyncStorage.setItem('@undo', JSON.stringify(this.undo));
                         this.setState({undo: this.undo});
                     }}
+                    onPlus={(index, result)=>{
+                        let me = this;
+                        AsyncStorage.getItem('@undo', (err, undo) => {
+                            if(err === null) {
+                                undo = JSON.parse(undo) || [];
+                                undo[index].result = result;
+                                me.undo = undo;
+                                AsyncStorage.setItem('@undo', JSON.stringify(undo));
+                                me.setState({undo});
+                            }
+                        })
+                    }}
                 />
             </ViewContainer>
         )

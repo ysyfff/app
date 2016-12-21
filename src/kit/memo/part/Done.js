@@ -26,6 +26,7 @@ export default class Done extends Component {
                 </View>
                 <View style={doneStyle.content}>
                     {this.props.dataSource.map((row, index)=>{
+                        
                         return (
                             <If v={index ==0 || this.state.showAll} key={index}>
                                 <View style={doneStyle.row} >
