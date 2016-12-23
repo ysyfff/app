@@ -7,6 +7,7 @@ import D from '../../../common/D'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 import Enter from './Enter'
+import Styles from './Style'
 
 const LINE_HEIGHT = 50;
 
@@ -14,18 +15,19 @@ export default class Undo extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            show: [],
+            rshow: [], //edit result show
+            eshow: [], //edit show
             nth: 0
         }
     }
 
     componentDidMount() {
 
-        let show = this.props.dataSource.map((row, index) => {
+        let rshow = this.props.dataSource.map((row, index) => {
             return false;
         });
 
-        this.setState({show});
+        this.setState({rshow});
     }
 
     render() {
@@ -43,34 +45,37 @@ export default class Undo extends Component {
                     {this.props.dataSource.map((row, index)=>{
 
                         return (
-                            <View style={undoStyle.row} key={index}>
-                                <View style={{flex: 1}}>
-                                    <View style={{flexDirection: 'row', flex: 1}}>
-                                        <View style={undoStyle.textContainer}>
-                                            <Text style={{fontSize: 20}}>
+                            <View style={Styles.rowWrapper} key={index}>
+                                <View style={Styles.rowInner}>
+                                    <View style={Styles.rows}>
+                                        {/*展示待办事项*/}
+                                        <View style={Styles.textWrapper}>
+                                            <Text style={Styles.mainText}>
                                                 {row.text}
                                             </Text>
                                         </View>
 
+                                        <If >
+                                        </If>
+
                                         {/*时间显示*/}
-                                        <View style={undoStyle.info}>
-                                            <View style={undoStyle.timeContainer}>
-                                                <Text style={undoStyle.time}>
-                                                    {D.format(row.time, 'MM-DD')}
-                                                </Text>
-                                            </View>
+                                        <View style={Styles.infoWrapper}>
+                                            <Text style={Styles.timeText}>
+                                                {D.format(row.time, 'MM-DD')}
+                                            </Text>
                                         </View>
                                     </View>
 
-                                    <View style={{flex: 1, flexDirection: 'row'}}>
-                                        <View style={{marginTop: 5}}>
-                                            <Text style={{color: 'gray', fontSize: 12}}>
+                                    <View style={Styles.rows}>
+                                        {/*展示记录的待办结果*/}
+                                        <View style={Styles.resultWrapper}>
+                                            <Text style={Styles.resultText}>
                                                 {row.result}
                                             </Text>
                                         </View>
 
                                         {/*记录待办结果Enter*/}
-                                        <If v={this.state.show[index]}>
+                                        <If v={this.state.rshow[index]}>
                                             <View style={[undoStyle.plus]}>
                                                 <Enter
                                                     inputStyle={{height: 20}}
@@ -83,35 +88,35 @@ export default class Undo extends Component {
                                                     value={row.result}
                                                     onAddEvent={(text) => {
                                                         this.props.onPlus && this.props.onPlus(index, text);
-                                                        let show = _.assign({}, this.state.show);
-                                                        show[index] = !show[index];
-                                                        this.setState({show});
+                                                        let rshow = _.assign({}, this.state.rshow);
+                                                        rshow[index] = !rshow[index];
+                                                        this.setState({rshow});
                                                     }}
                                                 />
                                             </View>
                                         </If>
 
-                                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                        <View style={Styles.operWrapper}>
                                             {/*记录待办结果Button*/}
                                             <TouchableOpacity
-                                                style={undoStyle.plusBtn}
+                                                style={Styles.operBtn}
                                                 onPress={() => {
-                                                    let show = _.assign({}, this.state.show);
-                                                    show[index] = !show[index];
-                                                    this.setState({show});
+                                                    let rshow = _.assign({}, this.state.rshow);
+                                                    rshow[index] = !rshow[index];
+                                                    this.setState({rshow});
                                                  }}>
                                                  <Icon name="plus" size={10} color={Skin.lightBlue}/>
                                              </TouchableOpacity>
 
                                              {/*完成按钮*/}
-                                             <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
+                                             <TouchableOpacity style={Styles.operBtn} onPress={() => {
                                                      this.props.onFinish && this.props.onFinish(index);
                                                  }}>
                                                  <Icon name="check" size={10} color={Skin.lightBlue}/>
                                              </TouchableOpacity>
 
                                              {/*删除按钮*/}
-                                             <TouchableOpacity style={undoStyle.plusBtn} onPress={() => {
+                                             <TouchableOpacity style={[Styles.operBtn, Styles.lastOperBtn]} onPress={() => {
                                                      this.props.onDelete && this.props.onDelete(index);
                                                  }}>
                                                  <Icon name="close" size={10} color={Skin.lightBlue}/>
@@ -213,6 +218,6 @@ const undoStyle = StyleSheet.create({
         left: 0,
         right: 120,
         zIndex: 1,
-        backgroundColor: 'white'
+        backgroundColor: Skin.backgroundColor
     }
 });

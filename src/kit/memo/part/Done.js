@@ -6,7 +6,7 @@ import _ from 'lodash'
 import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 import D from '../../../common/D'
-
+import Styles from './Style'
 
 export default class Done extends Component {
     constructor(props) {
@@ -26,48 +26,54 @@ export default class Done extends Component {
                 </View>
                 <View style={doneStyle.content}>
                     {this.props.dataSource.map((row, index)=>{
-                        
+
                         return (
                             <If v={index ==0 || this.state.showAll} key={index}>
-                                <View style={doneStyle.row} >
-                                    <View style={doneStyle.textContainer}>
-                                        <Text>
+                              <View style={Styles.rowWrapper}>
+                                <View style={Styles.rowInner}>
+
+                                  <View style={Styles.rows} >
+                                    <View style={Styles.textWrapper}>
+                                        <Text style={Styles.mainText}>
                                             {row.text}
                                         </Text>
                                     </View>
 
                                     {/*时间显示*/}
-                                    <View style={doneStyle.info}>
-                                        <View style={doneStyle.timeContainer}>
-                                            <Text style={doneStyle.time}>
-                                                {D.format(row.time, 'MM-DD')}
-                                            </Text>
-                                        </View>
+                                    <View style={Styles.infoWrapper}>
+                                      <Text style={Styles.timeText}>
+                                          {D.format(row.time, 'MM-DD')}
+                                      </Text>
                                     </View>
+                                  </View>
 
-                                    {/* 展开收起按钮 */}
-                                    <If v={index == 0}>
-                                        <View style={{width: 30}}>
-                                            <TouchableOpacity style={doneStyle.showAll} onPress={()=>{
-                                                this.setState({
-                                                    showAll: !this.state.showAll
-                                                })
-                                            }}>
-                                                <If v={this.state.showAll}>
-                                                    <Icon name="angle-down" size={18} color={Skin.baseColor} />
-                                                </If>
-                                                <If v={!this.state.showAll}>
-                                                    <Icon name="angle-right" size={18} color={Skin.baseColor} />
-                                                </If>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </If>
-                                    <If v={index != 0}>
-                                        <View style={{width: 30}}>
+                                  <View style={Styles.rows}>
+                                      {/*展示记录的待办结果*/}
+                                      <View style={Styles.resultWrapper}>
+                                          <Text style={Styles.resultText}>
+                                              {row.result}
+                                          </Text>
+                                      </View>
 
-                                        </View>
-                                    </If>
+                                      <View style={Styles.operWrapper}>
+                                        <If v={index == 0}>
+                                          <TouchableOpacity style={[Styles.operBtn, Styles.lastOperBtn]} onPress={()=>{
+                                              this.setState({
+                                                  showAll: !this.state.showAll
+                                              })
+                                          }}>
+                                              <If v={this.state.showAll}>
+                                                  <Icon name="angle-down" size={14} color={Skin.lightBlue} />
+                                              </If>
+                                              <If v={!this.state.showAll}>
+                                                  <Icon name="angle-right" size={14} color={Skin.lightBlue} />
+                                              </If>
+                                          </TouchableOpacity>
+                                        </If>
+                                      </View>
+                                  </View>
                                 </View>
+                              </View>
                             </If>
                         )
                     })}
@@ -77,7 +83,12 @@ export default class Done extends Component {
     }
 }
 
+// {/* 展开收起按钮 */}
 
+// <If v={index != 0}>
+//     <View style={{width: 30}}>
+//     </View>
+// </If>
 
 const doneStyle = StyleSheet.create({
     container: {
