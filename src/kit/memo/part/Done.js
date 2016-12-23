@@ -44,6 +44,14 @@ export default class Done extends Component {
                                       <Text style={Styles.timeText}>
                                           {D.format(row.time, 'MM-DD')}
                                       </Text>
+                                      <If v={row.solveTime}>
+                                        <Text style={Styles.timeText}>
+                                          ~
+                                        </Text>
+                                      </If>
+                                      <Text style={doneStyle.solveTimeText}>
+                                          {D.format(row.solveTime, 'MM-DD')}
+                                      </Text>
                                     </View>
                                   </View>
 
@@ -115,14 +123,8 @@ const doneStyle = StyleSheet.create({
     showAll: {
         padding: 8
     },
-    info: {
-
-    },
-    timeContainer: {
-        marginTop: 8,
-    },
-    time: {
-        fontSize: 8,
-        color: '#aaa'
+    solveTimeText: {
+      fontSize: 8,
+      color: Skin.baseColor
     }
 });

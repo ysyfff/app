@@ -17,6 +17,18 @@ export default class Memo extends Component {
             undo: [],
             done: []
         }
+        // undo: {
+        //   text:
+        //   time:
+        //   result,
+        // }
+
+        // done: {
+        //   text:
+        //   time:
+        //   result,
+        //   solveTime:
+        // }
         this.undo = [];
         this.done = [];
     }
@@ -61,6 +73,8 @@ export default class Memo extends Component {
                     onFinish={(index)=>{
                         let done = this.undo.splice(index, 1);
                         //新增done
+                        //添加解决时间
+                        done[0].solveTime = new Date();
                         this.done.unshift(done[0]);
                         //存储新增的done
                         AsyncStorage.setItem('@done', JSON.stringify(this.done));

@@ -15,7 +15,7 @@ class D {
         }else if(_.isDate(date)) {
             res = date;
         }else{
-            res = new Date();
+            res = '';
         }
 
         return res;
@@ -25,23 +25,27 @@ class D {
     format(date, pattern) {
         date = this.toDate(date);
 
-        let map = new Map([
-            [/(Y+)/g, date.getFullYear()],
-            [/(M+)/g, date.getMonth() + 1],
-            [/(D+)/g, date.getDate()],
-            [/(h+)/g, date.getHours()],
-            [/(m+)/g, date.getMinutes()],
-            [/(s+)/g, date.getSeconds()],
-            [/(S+)/g, date.getMilliseconds()]
-        ]);
+        if(date){
+          let map = new Map([
+              [/(Y+)/g, date.getFullYear()],
+              [/(M+)/g, date.getMonth() + 1],
+              [/(D+)/g, date.getDate()],
+              [/(h+)/g, date.getHours()],
+              [/(m+)/g, date.getMinutes()],
+              [/(s+)/g, date.getSeconds()],
+              [/(S+)/g, date.getMilliseconds()]
+          ]);
 
-        for(let [k, v] of map) {
-            if(k.test(pattern)) {
-                let vv = '000' + v;
-                let vl = vv.length;
+          for(let [k, v] of map) {
+              if(k.test(pattern)) {
+                  let vv = '000' + v;
+                  let vl = vv.length;
 
-                pattern = pattern.replace(RegExp.$1, vv.substr(vl - Math.max((v+'').length), vl));
-            }
+                  pattern = pattern.replace(RegExp.$1, vv.substr(vl - Math.max((v+'').length), vl));
+              }
+          }
+        }else{
+          pattern = '';
         }
 
         return pattern;

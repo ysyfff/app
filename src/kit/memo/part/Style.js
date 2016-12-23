@@ -21,13 +21,15 @@ const Styles = StyleSheet.create({
   },
   textWrapper: {
     flex: 1,
-    marginTop: 5
+    marginTop: 5,
+
   },
   mainText: {
     fontSize: 20
   },
   infoWrapper: {
-    marginTop: 8
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   timeText: {
     fontSize: 8,
