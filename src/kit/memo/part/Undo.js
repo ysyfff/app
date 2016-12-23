@@ -88,7 +88,7 @@ export default class Undo extends Component {
                                                     value={row.result}
                                                     onAddEvent={(text) => {
                                                         this.props.onPlus && this.props.onPlus(index, text);
-                                                        let rshow = _.assign({}, this.state.rshow);
+                                                        let rshow = _.assign([], this.state.rshow);
                                                         rshow[index] = !rshow[index];
                                                         this.setState({rshow});
                                                     }}
@@ -101,7 +101,7 @@ export default class Undo extends Component {
                                             <TouchableOpacity
                                                 style={Styles.operBtn}
                                                 onPress={() => {
-                                                    let rshow = _.assign({}, this.state.rshow);
+                                                    let rshow = _.assign([], this.state.rshow);
                                                     rshow[index] = !rshow[index];
                                                     this.setState({rshow});
                                                  }}>

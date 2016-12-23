@@ -58,9 +58,11 @@ export default class Memo extends Component {
                 <Enter
                     onAddEvent={(text) => {
                         //新增undo
-                        this.undo.unshift({text: text, time: new Date()});
-                        AsyncStorage.setItem('@undo', JSON.stringify(this.undo));
-                        this.setState({undo: this.undo});
+                        if(_.trim(text)) {
+                          this.undo.unshift({text: text, time: new Date()});
+                          AsyncStorage.setItem('@undo', JSON.stringify(this.undo));
+                          this.setState({undo: this.undo});
+                        }
                     }}
                 />
 

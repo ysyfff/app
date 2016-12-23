@@ -47,12 +47,8 @@ export default class Enter extends Component {
                     />
                 </View>
                 <TouchableOpacity style={[enterStyle.btn, this.props.btnStyle]} onPress={()=>{
-                    if(_.trim(this.state.text)) {
-                        if(this.props.onAddEvent) {
-                            this.props.onAddEvent(this.state.text);
-                            this.setState({text: ''});
-                        }
-                    }else{
+                    if(this.props.onAddEvent) {
+                        this.props.onAddEvent(this.state.text);
                         this.setState({text: ''});
                     }
 
