@@ -1,11 +1,30 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, ScrollView, Text, TextInputState} from 'react-native'
+import {View, StyleSheet, ScrollView, Text, TextInputState, RefreshControl} from 'react-native'
 
 
 export default class ViewContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      refreshing: false
+    }
+  }
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    setTimeout(()=>{
+      this.setState({refreshing: false})
+    }, 500)
+  }
     render() {
         return (
             <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh.bind(this)}
+                />
+              }
                 showsVerticalScrollIndicator={true}
                 automaticallyAdjustContentInsets={false}
                 contentContainerStyle={styles.content}
@@ -29,9 +48,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f8f8f8',
         borderLeftWidth: 1,
-        borderLeftColor: '#ddd'
+        borderLeftColor: '#ddd',
+        marginTop: 64,
+
     },
     container: {
-        marginTop: 84,
+      marginTop: 20,
     }
 })

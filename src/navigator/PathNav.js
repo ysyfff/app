@@ -27,7 +27,7 @@ export default class PathNav extends Component {
     render() {
         let me = this;
         const NavDataSource = {
-            initialRoute: 'Kit', //初始路由
+            initialRoute: 'Myself', //初始路由
             route: {
                 Myself: {
                     renderScene: function(route, navigators) {

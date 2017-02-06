@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView, AsyncStorage} from 'react-native'
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView, AsyncStorage, Button} from 'react-native'
 import ViewContainer from '../../common/ViewContainer'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import _ from 'lodash'
@@ -9,13 +9,16 @@ import If from '../../../component/If'
 import Enter from './part/Enter'
 import Undo from './part/Undo'
 import Done from './part/Done'
+import Dlg from '../../../component/Dlg'
+
 
 export default class Memo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             undo: [],
-            done: []
+            done: [],
+            showDlg: true
         }
         // undo: {
         //   text:
@@ -49,7 +52,6 @@ export default class Memo extends Component {
                 me.setState({done})
             }
         });
-
     }
 
     render() {

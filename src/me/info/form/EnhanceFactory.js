@@ -2,8 +2,17 @@
 // 1. 增加校验相关的props属性
 // 2. 增加error的展示
 
+/*
+Validator的组成
+
+module A: Inhance   增加validation，error，check等属性
+module B: Valdation 解析validation，校验value
+module C: Rule      存储validation以及具体的校验规则
+*/
+
 import React from 'react'
 import {StyleSheet, View, Text} from 'react-native'
+import {R} from './Rule.js'
 import _ from 'lodash'
 
 class If extends React.Component {
@@ -27,7 +36,6 @@ class Validation {
 
     parse(validations) {
         let rules = null;
-
         if(_.isString(validations)) {
             //正则的前瞻 (?!匹配模式)
             rules = validations.split(/\,(?![^{\[]*[}\]])/g).reduce((accumulator, currentValue) => {
@@ -43,18 +51,20 @@ class Validation {
                 return accumulator;
             }, {});
         }
-        console.log(rules)
+
         return new Validation(rules || {});
     }
 
     check(value) {
-        return value == 1 ? [true, '1111'] : [false, '2222'];
+      debugger
+    let he = R.check(this.rules, value)
+    return he;
     }
-
 }
 
 let V = new Validation();
-V.parse('required,a:[1,2]')
+
+
 
 //在这里能够直接读取到加强后的Component上的props
 export default (ComposedComponent, onChange, getter) => class extends React.Component {
@@ -63,17 +73,18 @@ export default (ComposedComponent, onChange, getter) => class extends React.Comp
 
     constructor(props) {
         super(props);
-        /* @param showerr 是否展示错误
+        /* @param passed 是否展示错误
         */
         this._v = null;
         this.state = {
-            showerr: false,
+            passed: true,
             errmsg: ''
         }
     }
 
     componentDidMount() {
         this._v = V.parse(this.props.validation);
+
     }
 
     componentWillUnmount() {
@@ -81,8 +92,8 @@ export default (ComposedComponent, onChange, getter) => class extends React.Comp
 
     //对值进行check
     check(value) {
-        let [showerr, errmsg] = this._v.check(value);
-        this.setState({showerr, errmsg});
+        let [passed, errmsg] = this._v.check(value);
+        this.setState({passed, errmsg});
     }
 
     //当值变化的时候，update到原来的component，并进行check
@@ -108,7 +119,7 @@ export default (ComposedComponent, onChange, getter) => class extends React.Comp
                 {/*
                     Filed Error
                 */}
-                <If v={this.state.showerr}>
+                <If v={!this.state.passed}>
                     <View style={style.error}>
                         <Text>
                             {this.props.errmsg || this.state.errmsg}

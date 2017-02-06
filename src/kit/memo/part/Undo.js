@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView, AsyncStorage} from 'react-native'
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, ListView, AsyncStorage, Button} from 'react-native'
 import ViewContainer from '../../../common/ViewContainer'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import _ from 'lodash'
@@ -17,7 +17,8 @@ export default class Undo extends Component {
         this.state = {
             rshow: [], //edit result show
             eshow: [], //edit show
-            nth: 0
+            nth: 0,
+            showDlg: true
         }
     }
 
@@ -128,6 +129,8 @@ export default class Undo extends Component {
                         )
                     })}
                 </View>
+
+
             </View>
         )
     }
@@ -144,14 +147,7 @@ const undoStyle = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: Skin.lightBlue,
     },
-    row: {
-        flexDirection: 'row',
-        height: LINE_HEIGHT,
-        paddingLeft: 8,
-        paddingRight: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: Skin.lightBlue,
-    },
+
     textContainer: {
         flex: 1,
         marginTop: 5

@@ -6,7 +6,7 @@ const LINE_HEIGHT = 50;
 const Styles = StyleSheet.create({
   rowWrapper: {
     flexDirection: 'row',
-    height: LINE_HEIGHT,
+    minHeight: LINE_HEIGHT,
     paddingLeft: 8,
     paddingRight: 8,
     borderBottomWidth: 1,

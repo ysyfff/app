@@ -7,15 +7,20 @@ import Skin from '../../../common/Skin'
 import If from '../../../../component/If'
 
 
-/*
-@props enterStyle
-@props inputStyle
-@props btnStyle
-@props iconName
-@props iconColor
-@props placeholder
-*/
+const DefaultProps = {
+  iconName: 'plus-circle',
+  iconColor: 'blue',
+  iconSize: 18,
+  placeholder: '添加待办事项',
+  placeholderTextColor: '#aaa',
+  enterStyle: '',
+  inputStyle: '',
+  btnStyle: ''
+}
+
 export default class Enter extends Component {
+    static defaultProps = DefaultProps;
+
     constructor(props) {
         super(props);
 
@@ -29,11 +34,6 @@ export default class Enter extends Component {
     }
 
     render() {
-        let iconName = this.props.iconName || 'plus-circle';
-        let iconColor = this.props.iconColor || 'blue';
-        let iconSize = this.props.iconSize || 18;
-        let placeholder = this.props.placeholder || '添加待办事项';
-        let placeholderTextColor  = this.props.placeholderTextColor || '';
 
         return (
             <View style={enterStyle.container}>
@@ -42,7 +42,8 @@ export default class Enter extends Component {
                         onChangeText={(text)=> {
                             this.setState({text});
                         }}
-                        placeholder={placeholder}
+                        placeholder={this.props.placeholder}
+                        placeholderTextColor={this.props.placeholderTextColor}
                         value={this.state.text}
                     />
                 </View>
@@ -54,7 +55,7 @@ export default class Enter extends Component {
 
                     return true;
                 }}>
-                    <Icon  name={iconName} color={iconColor} size={iconSize} />
+                    <Icon  name={this.props.iconName} color={this.props.iconColor} size={this.props.iconSize} />
                 </TouchableOpacity>
             </View>
         )

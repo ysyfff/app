@@ -8,18 +8,20 @@ import Form from './Form.js'
 import CartItem from '../../../../learn/highorder/CartItem'
 // import {} from './Enhance'
 // import TextInput from './Enhance'
-import {TextInputV} from './Enhance'
+import {TextInputV} from './EnhanceField'
 
 
 import _ from 'lodash'
 
 let format = (...args) => {
     let ans = [];
+
     args.map(arg => {
         if(_.isString(arg)){
-            ans.push(arg);
+          ans.push(arg);
         }else{
-            ans.push(arg[0] + ':[' + arg[1] + ',' + arg[2] + ']');
+          let [name, ...resArg] = arg;
+          ans.push(name + ':[' + resArg.join(',') + ']');
         }
     });
     return ans.join(',');
@@ -37,8 +39,10 @@ export default class Forms extends Component {
             timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
             swh: false,
             max: 15,
+            maxLength: 5,
             name: '',
             age: '',
+            height: '',
             textarea: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React.',
         }
     }
@@ -105,16 +109,23 @@ export default class Forms extends Component {
                     <Form style={{backgroundColor: '#eee', padding: 20}}>
                         <TextInputV
                             style={style.input}
-                            validation="required"
+                            validation={format('required', ['length', 1, this.state.maxLength])}
                             onChangeText={name => this.setState({name})}
                             value={this.state.name}
                         />
 
                         <TextInputV
                             style={style.input}
-                            validation={format('required', ['length', 1, this.state.max])}
+                            validation={format('required', ['range', 1, this.state.max])}
                             onChangeText={age => this.setState({age})}
                             value={this.state.age}
+                        />
+
+                        <TextInputV
+                            style={style.input}
+                            validation={format(['lte', 3], ['gte', '0.1'])}
+                            onChangeText={height => this.setState({height})}
+                            value={this.state.height}
                         />
 
                     </Form>

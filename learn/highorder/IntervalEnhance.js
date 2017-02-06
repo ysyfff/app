@@ -1,5 +1,12 @@
+/*什么是high-order？
+
+详情见 http://egorsmirnov.me/2015/09/30/react-and-es6-part4.html
+
+*/
+
 import React from 'react'
 
+//return了一个class，也就是说IntervalEnhance是一个class
 export var IntervalEnhance = ComposedComponent => class extends React.Component {
 
 
